@@ -27,6 +27,6 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-        int hej = 1;
+        int hej = 12;
     }
 }
