@@ -20,8 +20,7 @@ namespace CrownGardenRazor.Datas
         public DbSet<PaymentDetail> PaymentDetails { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
+        public DbSet<PostModel> Posts { get; set; }
 
-
-        
     }
 }
