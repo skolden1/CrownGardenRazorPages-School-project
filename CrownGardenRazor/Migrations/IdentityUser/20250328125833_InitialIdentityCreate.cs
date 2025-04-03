@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CrownGardenRazor.Migrations
+namespace CrownGardenRazor.Migrations.IdentityUser
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialIdentityCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

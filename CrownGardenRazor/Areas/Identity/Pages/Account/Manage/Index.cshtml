@@ -9,17 +9,50 @@
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
-        <form id="profile-form" method="post">
+        <form id="profile-form" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
                 <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
                 <label asp-for="Username" class="form-label"></label>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            <div class="mb-3">
+                <label class="form-label">Current Profile Picture</label><br />
+                @if (!string.IsNullOrEmpty(Model.Input.ExistingProfilePicture))
+                {
+                    <img src="@Model.Input.ExistingProfilePicture" alt="Profile" width="100" height="100" class="rounded-circle mb-2" style="object-fit: cover;" />
+                }
             </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.UploadedImage" class="form-label">Upload New Profile Picture</label>
+                <input asp-for="Input.UploadedImage" type="file" class="form-control" accept=".jpg,.jpeg,.png" />
+                <span asp-validation-for="Input.UploadedImage" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.FirstName" class="form-label"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.LastName" class="form-label"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.MembershipLevel" class="form-label"></label>
+                <select asp-for="Input.MembershipLevel" class="form-select">
+                    <option value="">Select membership</option>
+                    <option value="Gold">Gold</option>
+                    <option value="Silver">Silver</option>
+                    <option value="Bronze">Bronze</option>
+                </select>
+                <span asp-validation-for="Input.MembershipLevel" class="text-danger"></span>
+            </div>
+
+            
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
     </div>

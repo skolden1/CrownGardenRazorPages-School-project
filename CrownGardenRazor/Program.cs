@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CrownGardenRazor.Areas.Identity.Data;
 using CrownGardenRazor.Datas;
+using CrownGardenRazor.Data;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("IdentityUserContextConnection") ?? throw new InvalidOperationException("Connection string 'IdentityUserContextConnection' not found.");;
 

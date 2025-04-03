@@ -11,7 +11,6 @@ namespace CrownGardenRazor.Datas
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<ForumPost> ForumPosts { get; set; }

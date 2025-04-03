@@ -1,66 +1,122 @@
 ﻿@page
 @model RegisterModel
 @{
+    Layout = "/Pages/Shared/_Layout.cshtml";
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<!-- Hero Section -->
+<div class="hero-section text-center" style="background-image: url('/Images/CrownGardenHills-Hero3.jpg'); color: #fff; padding: 200px 20px;">
+    <h1>Membership</h1>
+    <h3>AN ICONIC GOLFING EXPERIENCE</h3>
+    
+</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
+
+<div class="container-fluid golf-resort-bg">
+    <div class="row justify-content-start align-items-center" style="min-height: 100vh;">
+        <div class="col-md-12 text-center mb-5 mt-5">
+            <h3>Why Choose CrownGarden Resort?</h3>
+            <p>
+                Nestled in a stunning natural landscape, CrownGarden Resort is more than a golf destination—it’s a retreat for those seeking exceptional leisure and refined experiences.
+                From the first drive to the final putt, each hole offers breathtaking views and carefully crafted challenges. With our warm hospitality and world-class amenities,
+                you’ll feel at home whether you’re chasing a personal best or simply enjoying the scenic beauty
+            </p>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center" style="background: linear-gradient(45deg, #0b3d1f, #103c1f); color: #fff;">
+                   
+                    <h3>Join Now exclusive club</h3>
+                </div>
+                <div class="card-body">
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label asp-for="Input.FirstName" class="form-label">First Name</label>
+                            <input asp-for="Input.FirstName" class="form-control" placeholder="Enter your first name" />
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
                         </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.LastName" class="form-label">Last Name</label>
+                            <input asp-for="Input.LastName" class="form-control" placeholder="Enter your last name" />
+                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profileImage" class="form-label">Profile Image</label>
+                            <input asp-for="Input.UploadedImage" class="form-control" type="file" accept=".jpg,.jpeg,.png" />
+                            <span asp-validation-for="Input.UploadedImage" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.MembershipLevel" class="form-label">Membership Level</label>
+                            <select asp-for="Input.MembershipLevel" class="form-select">
+                                <option value="">Select Membership</option>
+                                <option value="Gold">Gold</option>
+                                <option value="Silver">Silver</option>
+                                <option value="Bronze">Bronze</option>
+                            </select>
+                            <span asp-validation-for="Input.MembershipLevel" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.Email" class="form-label">Email</label>
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.Password" class="form-label">Password</label>
+                            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" placeholder="Enter your password" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
+                            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" placeholder="Re-enter your password" />
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg" style="background:#0b3d1f; color:white">Sign Up</button>
                     </form>
-                }
-            }
-        </section>
+                </div>
+                <div class="card-footer text-center">
+                    <small>By clicking Sign Up, you agree to our <a href="#">Terms of Service</a>, <a href="#">Data Policy</a>, and <a href="#">Cookie Policy</a></small>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<style>
+    .hero-section {
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        height: 70vh;
+    }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-section p {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+    .golf-resort-bg {
+        background: url('golf-course.jpg') no-repeat center center fixed;
+        background-size: cover;
+        padding: 20px;
+    }
+
+    .card {
+        border-radius: 8px;
+    }
+
+    .form-label {
+        font-weight: 600;
+    }
+
+    button:hover {
+        opacity: 0.9;
+        transition: opacity 0.3s ease;
+    }
+</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

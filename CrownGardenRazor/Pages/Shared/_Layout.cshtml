@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CrownGardenRazor.styles.css" asp-append-version="true" />
+
 </head>
 <body>
     <header>
@@ -26,10 +27,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <partial name="_LoginPartial" />
-                        </li>
                     </ul>
+                    <!-- I moved the <partial name> outside of the <ul> so its align the Right side of Nav -->
+                    <div class="d-flex ms-auto">
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
             </div>
         </nav>

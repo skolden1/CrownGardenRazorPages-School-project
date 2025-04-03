@@ -12,8 +12,8 @@ public class IndexModel : PageModel
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ILogger<IndexModel> _logger;
 
-    [BindProperty]
-    public string Id { get; set; } = "hej"; 
+    
+    
 
     public IndexModel(ILogger<IndexModel> logger)
     {
