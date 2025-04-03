@@ -12,5 +12,6 @@ public class IdentityUserTable : IdentityUser
     //här skriver vi props för aspnetuserstabellen, vill vi ändra i ngt annat table så måste vi göra ny klass
     //tex public string FullName {get; set;} 
     //  public byte[] Picture { get; set; }
+    
 }
 
