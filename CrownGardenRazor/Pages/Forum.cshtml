@@ -1,0 +1,134 @@
+﻿@page
+@model CrownGardenRazor.Pages.ForumModel
+@{
+}
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="card shadow-none border">
+    <form method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <div class="form-floating mb-3">
+                <textarea asp-for="PostText" class="form-control" placeholder="Leave a post" id="floatingTextarea2" style="height: 137px"></textarea>
+                <label for="floatingTextarea2" class="p-7">Post</label>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <label for="fileUpload" class="text-white d-flex align-items-center justify-content-center bg-primary p-2 fs-4 rounded-circle" style="cursor: pointer;">
+                    <i class="fa fa-photo"></i>
+                </label>
+
+                <label for="fileUpload" class="text-dark px-3 py-2" style="text-decoration: none; cursor: pointer;">
+                    Photo / Video
+                </label>
+
+                <input type="file" asp-for="PostPictures" id="fileUpload" multiple accept="image/*,video/*" class="d-none" />
+
+                <button type="submit" class="btn btn-primary ms-auto">Post</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="rows">
+    <div class="col-md-8">
+        @foreach (Model.PostModel item in Model.Posts)
+        {
+            <div class="post-content">
+                @if (item.PostPic != null)
+                {
+                    <img src="@item.PostPic" alt="post-image" class="img-responsive post-image">
+                }
+                <div class="post-container">
+                    <img src="@Model.GetProfilePicture(item.UserId)" alt="user" class="profile-photo-md pull-left">
+                    <div class="post-detail">
+                        <div class="user-info">
+                            <h5><a href="timeline.html" class="profile-link" style="text-decoration: none;">@Model.GetEmailForPost(item.UserId)</a> <span class="following">following</span></h5>
+                            <p class="text-muted">Published a photo on @item.PostDate.ToString()</p>
+                        </div>
+                        <form method="post" asp-page-handler="Delete">
+                            @if (Model.PostUserIdIsLoggedInUser(item.UserId))
+                            {
+                                <input asp-for="PostId" type="hidden" value="@item.Id" />
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            }
+                        </form>
+                        <form method="post" asp-page-handler="Like">
+                            <div class="reaction">
+                                <input asp-for="PostId" type="hidden" value="@item.Id" />
+                                @if (Model.HasLikedPost(item.Id))
+                                {
+                                    <button type="submit" class="btn text-green"><i class="fa fa-thumbs-up"></i>@item.LikeQuantity</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn text-red"><i class="fa fa-thumbs-up"></i>@item.LikeQuantity</button>
+                                }
+                            </div>
+                        </form>
+                        <div class="line-divider"></div>
+                        <div class="post-text">
+                            <p><i class="em em-anguished">@item.PostTxt</i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
+                        </div>
+                        <div class="line-divider"></div>
+                        @foreach ((string, string) tuple in Model.GetCommentsForPost(item))
+                        {
+                            <div class="post-comment">
+                                <img src="@Model.GetProfilePicture(tuple.Item2)" alt="" class="profile-photo-sm">
+                                <p><a href="timeline.html" class="profile-link" style="text-decoration: none;">@Model.GetEmailForPost(tuple.Item2)</a><i class="em em-laughing"></i> @tuple.Item1</p>
+                            </div>
+                        }
+                        <form method="post" asp-page-handler="Comment">
+                            <div class="post-comment">
+                                <img src="@Model.GetProfilePicture(Model.GetSessionUserId())" alt="" class="profile-photo-sm">
+                                <input asp-for="CommentText" type="text" class="form-control" placeholder="Post a comment">
+                                <input asp-for="PostId" type="hidden" value="@item.Id" />
+                                <button type="submit" class="btn btn-primary ms-auto">Post</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+@* <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="post-content">
+                <img src="https://www.bootdey.com/image/400x150/FFB6C1/000000" alt="post-image" class="img-responsive post-image">
+                <div class="post-container">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="user" class="profile-photo-md pull-left">
+                    <div class="post-detail">
+                        <div class="user-info">
+                            <h5><a href="timeline.html" class="profile-link">Alexis Clark</a> <span class="following">following</span></h5>
+                            <p class="text-muted">Published a photo about 3 mins ago</p>
+                        </div>
+                        <div class="reaction">
+                            <a class="btn text-green"><i class="fa fa-thumbs-up"></i> 13</a>
+                            <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
+                        </div>
+                        <div class="line-divider"></div>
+                        <div class="post-text">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
+                        </div>
+                        <div class="line-divider"></div>
+                        <div class="post-comment">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" class="profile-photo-sm">
+                            <p><a href="timeline.html" class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                        </div>
+                        <div class="post-comment">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="profile-photo-sm">
+                            <p><a href="timeline.html" class="profile-link">John</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                        </div>
+                        <div class="post-comment">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="profile-photo-sm">
+                            <input type="text" class="form-control" placeholder="Post a comment">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@

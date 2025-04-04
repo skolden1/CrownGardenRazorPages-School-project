@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
+
 namespace CrownGardenRazor.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
@@ -71,6 +72,27 @@ namespace CrownGardenRazor.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+
+            /// <summary>
+            /// adding new custom properties to the register page
+
+            [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Upload Profile Picture")]
+            public IFormFile UploadedImage { get; set; }
+
+            [Display(Name = "Is Golf Member")]
+            public bool IsGolfMember { get; set; }
+
+            [Display(Name = "Membership Level")]
+            public string MembershipLevel { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -114,6 +136,44 @@ namespace CrownGardenRazor.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+
+                //  Save profile picture (uploaded or default) 
+                // Lektion 8  2024-11-29 - Lagringsstrukturer och filer, SQL
+                string profileFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ProfilePictures");
+                Directory.CreateDirectory(profileFolder);
+
+                string profilePicturePath;
+
+                if (Input.UploadedImage != null)
+                {
+                    // Generate unique filename using GUID to prevent filename conflicts like image1.jpg x2 etc...
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(Input.UploadedImage.FileName)}";
+                    var filePath = Path.Combine(profileFolder, fileName);
+
+                    // Save the image file to disk
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await Input.UploadedImage.CopyToAsync(stream);
+                    }
+
+                    // Save relative path to database
+                    profilePicturePath = $"/ProfilePictures/{fileName}";
+                }
+                else
+                {
+                    //if the user didnt upload his ProfilePicture Use default profile image that is stored in wwwroot/ProfilePictures
+                    profilePicturePath = "/ProfilePictures/DefaultProfileImage.png";
+                }
+
+                //  Assign user values
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.IsGolfMember = Input.IsGolfMember;
+                user.MembershipLevel = Input.MembershipLevel;
+                user.ProfilePicture = profilePicturePath;
+                user.DateJoined = DateTime.Now;
+
+
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

@@ -56,6 +56,22 @@ namespace CrownGardenRazor.Areas.Identity.Pages.Account.Manage
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            /// [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Membership Level")]
+            public string MembershipLevel { get; set; }
+
+            [Display(Name = "Profile Picture")]
+            public IFormFile UploadedImage { get; set; }
+
+            public string ExistingProfilePicture { get; set; } // For showing current image
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -70,7 +86,10 @@ namespace CrownGardenRazor.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                MembershipLevel = user.MembershipLevel,
+                ExistingProfilePicture = user.ProfilePicture
             };
         }
 
@@ -86,6 +105,8 @@ namespace CrownGardenRazor.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+
+
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -100,17 +121,30 @@ namespace CrownGardenRazor.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.MembershipLevel = Input.MembershipLevel;
+
+            if (Input.UploadedImage != null)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
+                var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ProfilePictures");
+                Directory.CreateDirectory(folderPath);
+
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(Input.UploadedImage.FileName)}";
+                var filePath = Path.Combine(folderPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
+                    await Input.UploadedImage.CopyToAsync(stream);
                 }
+
+                user.ProfilePicture = $"/ProfilePictures/{fileName}";
             }
 
+            //updating the changes to Database
+            await _userManager.UpdateAsync(user);
+
+            // Refresh sign-in and show status
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
