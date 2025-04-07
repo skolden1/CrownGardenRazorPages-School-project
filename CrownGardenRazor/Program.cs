@@ -15,6 +15,7 @@ builder.Services.AddDefaultIdentity<IdentityUserTable>(options => options.SignIn
     .AddDefaultUI()
     .AddDefaultTokenProviders();
 
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 

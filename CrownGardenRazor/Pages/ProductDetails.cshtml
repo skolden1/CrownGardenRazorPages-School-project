@@ -1,6 +1,7 @@
 ﻿@page
 @model CrownGardenRazor.Pages.ProductDetailsModel
 @{
+    ViewData["Title"] = Model.Product.ProductName;
 }
 @if (Model.Product == null)
 {
