@@ -1,0 +1,121 @@
+﻿@page "{id}"
+@model CrownGardenRazor.Pages.Admin.EditCustomerModel
+@{
+    ViewData["Title"] = "Edit Customer";
+}
+
+<div class="hero-section" style="background-image: url('/Images/CrownGardenHills-Hero3.jpg');">
+    <div class="edit-container">
+        <h2 class="text-center mb-4">Edit Customer</h2>
+
+        <form method="post">
+            <input type="hidden" asp-for="Customer.Id" />
+
+            <div class="custom-floating-group mb-4">
+                <input asp-for="Customer.FirstName" required />
+                <label asp-for="Customer.FirstName">First Name</label>
+                <span asp-validation-for="Customer.FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="custom-floating-group mb-4">
+                <input asp-for="Customer.LastName" required />
+                <label asp-for="Customer.LastName">Last Name</label>
+                <span asp-validation-for="Customer.LastName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Customer.MembershipLevel" class="form-label" style="color:white;">Membership Level</label>
+                <select asp-for="Customer.MembershipLevel" class="form-select">
+                    <option value="">Select membership</option>
+                    <option value="Gold">Gold</option>
+                    <option value="Silver">Silver</option>
+                    <option value="Bronze">Bronze</option>
+                </select>
+                <span asp-validation-for="Customer.MembershipLevel" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-lg" style="background:#0b3d1f; color:white;">Save Changes</button>
+                <a asp-page="CustomerList" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .edit-container {
+        background-color: rgba(34, 34, 34, 0.95);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 500px;
+        color: white;
+    }
+
+    .custom-floating-group {
+        position: relative;
+    }
+
+        .custom-floating-group input {
+            width: 100%;
+            padding: 1rem 0.75rem 0.25rem 0.75rem;
+            background: #222;
+            border: 1px solid #555;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .custom-floating-group label {
+            position: absolute;
+            top: 1rem;
+            left: 0.75rem;
+            color: #aaa;
+            background: #222;
+            padding: 0 0.25rem;
+            transition: 0.2s ease;
+            pointer-events: none;
+        }
+
+        .custom-floating-group input:focus + label,
+        .custom-floating-group input:not(:placeholder-shown) + label {
+            top: -0.5rem;
+            left: 0.6rem;
+            font-size: 0.75rem;
+            color: #fff;
+        }
+
+    .form-control,
+    .form-select {
+        background: #222 !important;
+        color: white;
+        border: 1px solid #555;
+    }
+
+        .form-select option {
+            background: #222;
+            color: white;
+        }
+
+    media (max-width: 576px) {
+        .edit-container {
+        padding: 20px;
+        }
+
+
+
+    }
+</style>

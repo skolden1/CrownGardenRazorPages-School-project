@@ -3,61 +3,134 @@
 @{
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
-<h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
+<div class="hero-section">
+    <div class="login-container">
         <form id="profile-form" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                <label asp-for="Username" class="form-label"></label>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Current Profile Picture</label><br />
-                @if (!string.IsNullOrEmpty(Model.Input.ExistingProfilePicture))
-                {
-                    <img src="@Model.Input.ExistingProfilePicture" alt="Profile" width="100" height="100" class="rounded-circle mb-2" style="object-fit: cover;" />
-                }
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+            <div class="text-center mb-3">
+                <img id="profilePreview"
+                     src="@(!string.IsNullOrEmpty(Model.Input.ExistingProfilePicture) ? Model.Input.ExistingProfilePicture : "/ProfilePictures/DefaultProfileImage.png")"
+                     class="rounded-circle shadow"
+                     style="width: 100px; height: 100px; object-fit: cover;"
+                     alt="Profile Image" />
             </div>
 
             <div class="mb-3">
-                <label asp-for="Input.UploadedImage" class="form-label">Upload New Profile Picture</label>
-                <input asp-for="Input.UploadedImage" type="file" class="form-control" accept=".jpg,.jpeg,.png" />
+                <label asp-for="Input.UploadedImage" class="form-label text-white">Ladda upp ny bild</label>
+                <input asp-for="Input.UploadedImage" class="form-control" type="file" accept=".jpg,.jpeg,.png" onchange="previewProfileImage(event)" />
                 <span asp-validation-for="Input.UploadedImage" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Input.FirstName" class="form-label"></label>
-                <input asp-for="Input.FirstName" class="form-control" />
+            <div class="custom-floating-group mb-4">
+                <input asp-for="Input.FirstName" required />
+                <label asp-for="Input.FirstName">Förnamn</label>
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Input.LastName" class="form-label"></label>
-                <input asp-for="Input.LastName" class="form-control" />
+            <div class="custom-floating-group mb-4">
+                <input asp-for="Input.LastName" required />
+                <label asp-for="Input.LastName">Efternamn</label>
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Input.MembershipLevel" class="form-label"></label>
+                <label asp-for="Input.MembershipLevel" class="form-label text-white">Medlemskap</label>
                 <select asp-for="Input.MembershipLevel" class="form-select">
-                    <option value="">Select membership</option>
-                    <option value="Gold">Gold</option>
+                    <option value="">Välj medlemsnivå</option>
+                    <option value="Gold">Guld</option>
                     <option value="Silver">Silver</option>
-                    <option value="Bronze">Bronze</option>
+                    <option value="Bronze">Brons</option>
                 </select>
                 <span asp-validation-for="Input.MembershipLevel" class="text-danger"></span>
             </div>
 
-
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            <button id="update-profile-button" type="submit" class="btn btn-lg btn-success w-100 mt-3">Spara</button>
         </form>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        function previewProfileImage(event) {
+            const preview = document.getElementById('profilePreview');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '/ProfilePictures/DefaultProfileImage.png';
+            }
+        }
+    </script>
 }
+
+<style>
+    .hero-section {
+        background-image: url('@Url.Content("~/Images/CrownGardenHills-Hero3.jpg")');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-container {
+        background-color: rgba(34, 34, 34, 0.95);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 450px;
+        color: white;
+    }
+
+    .custom-floating-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+        .custom-floating-group input {
+            width: 100%;
+            padding: 1rem 0.75rem 0.25rem 0.75rem;
+            background: #222;
+            border: 1px solid #555;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .custom-floating-group label {
+            position: absolute;
+            top: 1rem;
+            left: 0.75rem;
+            color: #aaa;
+            background: #222;
+            padding: 0 0.25rem;
+            transition: 0.2s ease;
+            pointer-events: none;
+        }
+
+        .custom-floating-group input:focus + label,
+        .custom-floating-group input:not(:placeholder-shown) + label {
+            top: -0.5rem;
+            left: 0.6rem;
+            font-size: 0.75rem;
+            color: #fff;
+        }
+
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 30px #222 inset !important;
+        -webkit-text-fill-color: white !important;
+    }
+</style>

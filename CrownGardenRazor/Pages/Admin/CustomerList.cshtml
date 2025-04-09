@@ -1,0 +1,106 @@
+﻿@page
+@model CrownGardenRazor.Pages.Admin.CustomerListModel
+@{
+    ViewData["Title"] = "Customer List";
+}
+
+<div class="hero-section" style="background-image: url('/Images/CrownGardenHills-Hero3.jpg');">
+    <div class="list-container">
+        <h2 class="text-center mb-4">Customer List</h2>
+
+        <table class="table table-dark table-bordered table-striped custom-table">
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Membership</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model.Customers)
+                {
+                    <tr>
+                        <td>
+                            <img src="@customer.ProfilePicture" width="40" height="40" class="rounded-circle" style="object-fit: cover;" />
+                        </td>
+                        <td>@customer.FirstName @customer.LastName</td>
+                        <td>@customer.Email</td>
+                        <td>@customer.MembershipLevel</td>
+                        <td>
+                            <a asp-page="EditCustomer" asp-route-id="@customer.Id" class="btn btn-sm btn-outline-light">Edit</a>
+                            <a asp-page="CustomerDetails" asp-route-id="@customer.Id" class="btn btn-sm btn-outline-secondary">Orders</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<style>
+    .hero-section {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+    }
+
+    .list-container {
+        background-color: rgba(34, 34, 34, 0.95);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 1000px;
+        color: white;
+        overflow-x: auto;
+    }
+
+    .custom-table thead tr {
+        background-color: #0b3d1f;
+        color: #fff;
+    }
+
+    .custom-table tbody tr {
+        background-color: #1e1e1e;
+    }
+
+        .custom-table tbody tr:hover {
+            background-color: #2a2a2a;
+        }
+
+    .custom-table td,
+    .custom-table th {
+        vertical-align: middle;
+        border-color: #333;
+    }
+
+    .btn-outline-light {
+        color: #fff;
+        border-color: #aaa;
+    }
+
+        .btn-outline-light:hover {
+            background-color: #0b3d1f;
+            border-color: #0b3d1f;
+        }
+
+    media (max-width: 768px) {
+        .list-container {
+        padding: 20px;
+        font-size: 0.95rem;
+        }
+
+    .custom-table img {
+        width: 30px;
+        height: 30px;
+    }
+
+    }
+</style>
+
