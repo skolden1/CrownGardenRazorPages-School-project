@@ -1,6 +1,7 @@
 ﻿@page
 @model CrownGardenRazor.Pages.ProductDetailsModel
 @{
+    ViewData["Title"] = Model.Product.ProductName;
 }
 @if (Model.Product == null)
 {
@@ -47,9 +48,12 @@
                 <label for="quantity" class="form-label">Quantity:</label>
                 <input type="number" class="form-control" id="quantity" value="1" min="1" style="width: 80px;">
             </div>
-            <button class="btn btn-success btn-lg mb-3 me-2">
-                <i class="bi bi-cart-plus"></i> Köp
+            <form method="post" asp-page-handler="AddToCart">
+            <button type="submit" class="btn btn-success btn-lg mb-3 me-2">
+                <i class="bi bi-cart-plus"></i> Lägg till i kundvagn
+                    <input type="hidden" name="productId" value="@Model.Product.ProductId"/>
             </button>
+            </form>
         </div>
     </div>
 </div>

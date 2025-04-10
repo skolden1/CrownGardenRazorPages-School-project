@@ -13,9 +13,7 @@ public class IndexModel : PageModel
 {
    
     private readonly AppDbContext _context;
-    private readonly UserManager<IdentityUser> _userManager; //är tydligen bättre för att jobba med Users
-                                                             //(skyddar anv mer o fungerar precis som _Icontext de når samma db tabell)
-                                                             //Kan behöva lägga till det i program då dock
+    private readonly UserManager<IdentityUser> _userManager; 
     private readonly IdentityUserContext _Icontext;
     private readonly ILogger<IndexModel> _logger;
 

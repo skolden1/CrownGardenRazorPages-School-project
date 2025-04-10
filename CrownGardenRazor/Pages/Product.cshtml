@@ -1,10 +1,13 @@
 ﻿@page
 @model CrownGardenRazor.Pages.ProductModel
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = "Vår shop";
 }
 <head>
     <link rel="stylesheet" href="~/css/Product.css" asp-append-version="true" />
+    <title>
+        @ViewData["Title"];
+    </title>
 </head>
 
 <div class="mb-3">
@@ -46,34 +49,57 @@
                     </div>
                 </div>
             </aside>
-
-            <main class="col-md-9">
-                @if (Model.productList.Any())
-                {
-                    <div class="row">
-                        @foreach (var product in Model.productList)
-                        {
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="product-item border p-3 d-flex flex-column bg-white p-3">
-                                    <a asp-page="ProductDetails" asp-route-id="@product.ProductId">
-                                        <img src="~/images/@product.ImageUrl" alt="@product.ProductName" class="product-image img-fluid" />
-                                    </a>
-                                    <a asp-page="ProductDetails" asp-route-id="@product.ProductId">
-                                        <h6>@product.ProductName</h6>
-                                    </a>
-                                    <p>Pris: @product.Price.ToString("C")</p>
-                                    <p>Antal i lager: @product.Quantity</p>
-                                    <button class="btn btn-success btn-md">Lägg i kundvagn</button>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                }
-                else
-                {
-                    <p class="alert alert-warning">@Model.ErrorMessage</p>
-                }
-            </main>
         </div>
     </div>
 </form>
+
+<div class="container mt-2">
+
+    <div class="row">
+        <main class="col-md-9 offset-md-3">
+            @if (Model.ErrorMessage != null)
+            {
+                <div class="alert alert-danger">@Model.ErrorMessage
+
+                    <a href="/Identity/Account/Login">Logga in här</a>
+                </div>
+
+            }
+
+            @if (TempData["AddToCartMsg"] != null)
+            {
+                <div class="alert alert-success">@TempData["AddToCartMsg"]</div>
+            }
+
+            @if (Model.productList != null && Model.productList.Any())
+            {
+                <div class="row">
+                    @foreach (var product in Model.productList)
+                    {
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="product-item border p-3 d-flex flex-column bg-white p-3">
+                                <a asp-page="ProductDetails" asp-route-id="@product.ProductId">
+                                    <img src="~/images/@product.ImageUrl" alt="@product.ProductName" class="product-image img-fluid" />
+                                </a>
+                                <a asp-page="ProductDetails" asp-route-id="@product.ProductId">
+                                    <h6>@product.ProductName</h6>
+                                </a>
+                                <p>Pris: @product.Price.ToString("C")</p>
+                                <p>Antal i lager: @product.Quantity</p>
+                         
+                                <form method="post" asp-page-handler="AddToCart">
+                                    <input type="hidden" name="productId" value="@product.ProductId" />
+                                    <button type="submit" class="btn btn-success btn-md">Lägg i kundvagn</button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="alert alert-warning">@Model.ErrorMessage</p>
+            } 
+        </main>
+    </div>
+</div>

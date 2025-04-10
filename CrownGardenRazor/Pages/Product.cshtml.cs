@@ -1,4 +1,5 @@
 using Azure;
+using CrownGardenRazor.Areas.Identity.Data;
 using CrownGardenRazor.Datas;
 using CrownGardenRazor.Model;
 using Humanizer;
@@ -12,6 +13,7 @@ using System;
 using System.Diagnostics.Metrics;
 using System.Net.NetworkInformation;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -20,13 +22,16 @@ namespace CrownGardenRazor.Pages
     public class ProductModel : PageModel
     {
         private readonly AppDbContext _context;
+        //private readonly IdentityUserContext _identityUserContext;
 
         public ProductModel(AppDbContext context)
         {
             _context = context;
+
         }
-        public List<Product> productList { get; set; }
+        public List<Product> productList { get; set; } = new List<Product>();
         public string SearchWord { get; set; }
+        
         public string ErrorMessage { get; set; }
         public bool Under300 { get; set; }
         public bool Over300Under800 { get; set; }
@@ -34,10 +39,11 @@ namespace CrownGardenRazor.Pages
         public bool Over2500 { get; set; }
         public string Category { get; set; }
         public bool Over300 { get; set; }
+        public string AddToCartMsg { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string SearchWord, string Category, bool Under300, bool Over300Under800, bool Over800Under2500, bool Over2500)
         {
-           
+
             if (!await _context.Products.AnyAsync())
             {
                 productList = new List<Product>
@@ -72,7 +78,7 @@ namespace CrownGardenRazor.Pages
             }
 
             productList = await _context.Products.Include(p => p.Category).ToListAsync();
-            
+
             if (!string.IsNullOrWhiteSpace(SearchWord))
             {
                 productList = await _context.Products
@@ -107,9 +113,47 @@ namespace CrownGardenRazor.Pages
             }
 
             return Page();
-                
+
         }
 
-       
+        
+        public async Task<IActionResult> OnPostAddToCartAsync(int productId)
+        {
+            
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var productById = await _context.Products.FindAsync(productId);
+
+
+            if (userId == null)
+            {
+                ErrorMessage = "Du måste vara inloggad för att lägga till i kundvagnen";
+                productList = await _context.Products.Include(p => p.Category).ToListAsync();
+                return Page();
+            }
+
+            if (productById != null)
+            {
+                var cartItem = await _context.Carts.FirstOrDefaultAsync(u => u.UserId == userId && u.ProductId == productId);
+
+                if (cartItem != null)
+                {
+                    cartItem.Quantity++;
+                }
+                else
+                {
+                    cartItem = new Cart
+                    {
+                        UserId = userId,
+                        ProductId = productId,
+                        Quantity = 1
+                    };
+                    await _context.Carts.AddAsync(cartItem);          
+                }
+                await _context.SaveChangesAsync();
+                TempData["AddToCartMsg"] = "Produkten lades till i kundvagnen";
+            }
+            return RedirectToPage();
+        }
     }
 }

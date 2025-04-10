@@ -1,0 +1,100 @@
+﻿@page
+@model CrownGardenRazor.Pages.CheckoutModel
+@{
+    ViewData["Title"] = "Kassa";
+}
+
+<h3>Din varukorg</h3>
+
+@if (Model.ErrorMsg != null && Model.ErrorMsg != "")
+{
+    <div class="alert alert-danger">
+        @Model.ErrorMsg
+        <a href="/Product" class="btn btn-link">Gå till produkter</a>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            <h4>Varukorg</h4>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+
+                @foreach (var p in Model.CartItemList)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>@p.Product.ProductName</strong>                          
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <span>x @p.Quantity</span>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <span>@p.Product.Price.ToString("C") /st</span>
+                                
+                            </div>  
+                            <div class="col-md-3 text-center">
+                                <span><strong>Totalpris:</strong></span>
+                                <p class="d-inline-block">@((p.Quantity * p.Product.Price).ToString("C"))</p>
+                                <form method="post" asp-page-handler="Delete">
+                                    <input type="hidden" name="cartItemId" value="@p.CartId"/>
+                                    <button type="submit" class="btn btn-danger">Ta bort</button>
+                                </form>                     
+                            </div>
+                        </div>             
+                    </li>                 
+                }
+            </ul>
+        </div>
+
+        <div class="card-footer mt-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Total: @Model.TotalAmounT.ToString("C")</h5>
+                </div>
+            </div>
+            <div class="d-flex gap-2 mt-3 align-items-baseline">
+                <form method="post" asp-page-handler="CheckoutOrder">
+                
+                    <div class="d-flex mt-3 gap-2">
+                        <button type="submit" class="btn btn-success">Köp</button>
+                    </div>                          
+                </form>
+                <a asp-page="Product">
+                    <button class="btn btn-primary mb-1">Tillbaka till produkter</button>
+                </a>
+            </div>
+
+        </div>
+    </div>
+}
+
+
+
+
+@* <h3>Din varukorg</h3>
+
+@if (Model.ErrorMsg != null && Model.ErrorMsg != "")
+{
+    <div class="alert alert-danger">@Model.ErrorMsg
+
+        <a href="/Product"> gå till produkter</a>
+    </div>
+}
+else
+{
+    <ul>
+        @foreach (var p in Model.CartItemList)
+        {
+            <li>@p.Product.ProductName - @p.Quantity - @p.Product.Price.ToString("C")</li>
+        }
+    </ul>
+   <p>Total: @Model.TotalAmounT.ToString("C")</p>
+
+   
+} *@
+
+

@@ -3,11 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CrownGardenRazor</title>
+    <title>@ViewData["Title"]</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CrownGardenRazor.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/icons.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 </head>
@@ -27,14 +28,21 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Product">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
+                        </li>        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Forum">Forum</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        </li>                     
                     </ul>
+
+                    <div>
+                        <a class="btn" asp-page="Checkout" >
+                            <i class="bi bi-cart-icon"></i>
+                        </a>
+                        
+                    </div>
                     <!-- I moved the <partial name> outside of the <ul> so its align the Right side of Nav -->
                     <div class="d-flex ms-auto">
                         <partial name="_LoginPartial" />
@@ -52,6 +60,8 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2025 - CrownGardenRazor - <a asp-area="" asp-page="/Privacy">Privacy</a>
+
+            - Vill du kontakta oss? Klicka på denna <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">länk</a>
         </div>
     </footer>
 
