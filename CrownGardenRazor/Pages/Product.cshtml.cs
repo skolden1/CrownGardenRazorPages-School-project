@@ -39,14 +39,7 @@ namespace CrownGardenRazor.Pages
         public bool Over2500 { get; set; }
         public string Category { get; set; }
         public bool Over300 { get; set; }
-        
-
-
-        //testa o köra med denna metod om claims inte fungerar för att fånga rätt inloggad user från identity
-        //public string GetSessionUserId()
-        //{
-        //    return _identityUserContext.Users.FirstOrDefault(user => user.Email == User.Identity.Name)?.Id ?? "-1";
-        //}
+        public string AddToCartMsg { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string SearchWord, string Category, bool Under300, bool Over300Under800, bool Over800Under2500, bool Over2500)
         {
@@ -155,9 +148,10 @@ namespace CrownGardenRazor.Pages
                         ProductId = productId,
                         Quantity = 1
                     };
-                    await _context.Carts.AddAsync(cartItem);
+                    await _context.Carts.AddAsync(cartItem);          
                 }
                 await _context.SaveChangesAsync();
+                TempData["AddToCartMsg"] = "Produkten lades till i kundvagnen";
             }
             return RedirectToPage();
         }

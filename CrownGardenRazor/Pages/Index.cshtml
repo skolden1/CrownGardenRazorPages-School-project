@@ -1,14 +1,41 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Startsida";
+    ViewData["Title"] = "Home Page";
+    string currentItem = "";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    <img class="img-fluid" src="~/images/CrownGardenHills-Hero3.jpg" alt="Crown Garden Hills" />
+    <p class="header-p">Välkommen till Crown Garden! <br /> Vi ser fram emot ditt besök och medlemskap. <br /> Frasse har precis kokat korv!</p>
 </div>
 
-    <p>@Model.UserMessage</p>
+<div style="display: flex; flex-direction: row; justify-content: space-between;">
+    @for (int i = 1; i < 6; i++)
+    {
+
+        <div>
+            <img class="img-rounded" style="width: 200px;" src="~/images/product@(i).png" alt="product @(i)" />
+            <p>Product Details - Product Price</p>
+        </div>
+
+    }
 </div>
+
+
+
+<style>
+    div p {
+        display: block
+    }
+
+    .header-p {
+        position: absolute;
+        left: 10%;
+        top: 18%;
+        color: white;
+        font-size: 3rem;
+        text-shadow: 1px 1px 3px black;
+    }
+</style>
 

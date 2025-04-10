@@ -54,6 +54,7 @@
 </form>
 
 <div class="container mt-2">
+
     <div class="row">
         <main class="col-md-9 offset-md-3">
             @if (Model.ErrorMessage != null)
@@ -62,7 +63,12 @@
 
                     <a href="/Identity/Account/Login">Logga in här</a>
                 </div>
-               
+
+            }
+
+            @if (TempData["AddToCartMsg"] != null)
+            {
+                <div class="alert alert-success">@TempData["AddToCartMsg"]</div>
             }
 
             @if (Model.productList != null && Model.productList.Any())
@@ -80,7 +86,7 @@
                                 </a>
                                 <p>Pris: @product.Price.ToString("C")</p>
                                 <p>Antal i lager: @product.Quantity</p>
-
+                         
                                 <form method="post" asp-page-handler="AddToCart">
                                     <input type="hidden" name="productId" value="@product.ProductId" />
                                     <button type="submit" class="btn btn-success btn-md">Lägg i kundvagn</button>
