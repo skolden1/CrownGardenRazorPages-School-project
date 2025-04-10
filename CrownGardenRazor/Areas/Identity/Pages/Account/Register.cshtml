@@ -41,11 +41,7 @@
                             <input asp-for="Input.LastName" class="form-control" placeholder="Enter your last name" />
                             <span asp-validation-for="Input.LastName" class="text-danger"></span>
                         </div>
-                        <div class="mb-3">
-                            <label for="profileImage" class="form-label">Profile Image</label>
-                            <input asp-for="Input.UploadedImage" class="form-control" type="file" accept=".jpg,.jpeg,.png" />
-                            <span asp-validation-for="Input.UploadedImage" class="text-danger"></span>
-                        </div>
+
                         <div class="mb-3">
                             <label asp-for="Input.MembershipLevel" class="form-label">Membership Level</label>
                             <select asp-for="Input.MembershipLevel" class="form-select">
@@ -61,22 +57,51 @@
                             <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
                         </div>
+
+                        <!--Added (view password function aven in (confirmPassword) field -->
+
                         <div class="mb-3">
-                            <label asp-for="Input.Password" class="form-label">Password</label>
                             <div class="input-group">
-                                <input asp-for="Input.Password" class="form-control" id="passwordInput" placeholder="Enter your password" />
-                                <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()" tabindex="-1">
-                                    <i class="bi bi-eye" id="toggleIcon"></i>
+                                <input asp-for="Input.Password" class="form-control" id="passwordInput" autocomplete="current-password" placeholder="password" />
+                                <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('passwordInput', 'toggleIcon1')" tabindex="-1">
+                                    <i class="bi bi-eye-slash" id="toggleIcon1"></i>
                                 </button>
                             </div>
+                            <label asp-for="Input.Password" class="form-label">Password</label>
                             <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
-                        <div class="mb-3">
-                            <label asp-for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
-                            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" placeholder="Re-enter your password" />
+
+
+                        <div class="form-floating mb-3">
+                            <div class="input-group">
+                                <input asp-for="Input.ConfirmPassword" class="form-control" id="confirmPasswordInput" autocomplete="new-password" placeholder="Re-enter your password" />
+                                <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('confirmPasswordInput', 'toggleIcon2')" tabindex="-1">
+                                    <i class="bi bi-eye-slash" id="toggleIcon2"></i>
+                                </button>
+                            </div>
+
                             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                         </div>
-                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg" style="background:#0b3d1f; color:white">Sign Up</button>
+
+                        <!-- Changed profile picture layout -->
+                        <div class="mb-3">
+                            <label for="profilePicture" class="form-label">Profile Picture</label>
+
+                            <div class="border rounded shadow-sm p-2" style="height: 200px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
+                                <img id="profilePreview"
+                                     src="/ProfilePictures/DefaultProfileImage.png"
+                                     alt="Profile Preview"
+                                     style="max-height: 100%; max-width: 100%; object-fit: cover;" />
+                            </div>
+
+                            <input type="file" class="form-control mt-2" id="profilePicture" name="ProfilePicture" accept="image/*" onchange="previewProfileImage(event)" />
+                        </div>
+
+
+
+                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+
+
                     </form>
                 </div>
                 <div class="card-footer text-center">
@@ -178,24 +203,39 @@
     <partial name="_ValidationScriptsPartial" />
 
 
-
+    <!-- Fixed the function (not show password as default -->
     <script>
-        function togglePassword() {
-            const passwordInput = document.getElementById("passwordInput");
-            const toggleIcon = document.getElementById("toggleIcon");
+        function togglePassword(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
 
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
-                toggleIcon.classList.remove("bi-eye");
-                toggleIcon.classList.add("bi-eye-slash");
+                icon.classList.add("bi-eye");
+                icon.classList.remove("bi-eye-slash");
             } else {
                 passwordInput.type = "password";
-                toggleIcon.classList.remove("bi-eye-slash");
-                toggleIcon.classList.add("bi-eye");
+                icon.classList.add("bi-eye-slash");
+                icon.classList.remove("bi-eye");
             }
         }
     </script>
 
+    <!-- Added script for the profile picture in (register)-->
+    <script>
+        function previewProfileImage(event) {
+            const preview = document.getElementById('profilePreview');
+            const file = event.target.files[0];
 
-
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '/ProfilePictures/DefaultProfileImage.png';
+            }
+        }
+    </script>
 }

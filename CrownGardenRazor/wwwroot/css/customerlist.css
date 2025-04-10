@@ -1,0 +1,107 @@
+﻿.hero-section {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.list-container {
+    background-color: rgba(34, 34, 34, 0.95);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 1000px;
+    color: white;
+    overflow-x: auto;
+}
+
+.custom-table thead tr {
+    background-color: #0b3d1f;
+    color: #fff;
+}
+
+.custom-table tbody tr {
+    background-color: #1e1e1e;
+}
+
+    .custom-table tbody tr:hover {
+        background-color: #2a2a2a;
+    }
+
+.custom-table td,
+.custom-table th {
+    vertical-align: middle;
+    border-color: #333;
+}
+
+.btn-outline-light {
+    color: #fff;
+    border-color: #aaa;
+}
+
+    .btn-outline-light:hover {
+        background-color: #0b3d1f;
+        border-color: #0b3d1f;
+    }
+
+.filter-btn {
+    margin-top: 5px;
+}
+
+/* Make table responsive */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    .list-container {
+        padding: 20px;
+        font-size: 0.95rem;
+    }
+
+    .custom-table thead {
+        display: none;
+    }
+
+    .custom-table,
+    .custom-table tbody,
+    .custom-table tr,
+    .custom-table td {
+        display: block;
+        width: 100%;
+    }
+
+        .custom-table td {
+            text-align: right;
+            padding-left: 50%;
+            position: relative;
+            border: none;
+            border-bottom: 1px solid #444;
+        }
+
+            .custom-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 15px;
+                font-weight: bold;
+                text-align: left;
+                white-space: nowrap;
+            }
+
+        .custom-table img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .search-btn {
+            margin-top: 5px;
+        }
+}

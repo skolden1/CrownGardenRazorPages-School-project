@@ -1,0 +1,72 @@
+﻿@page
+@model CrownGardenRazor.Pages.Admin.CustomerListModel
+@{
+    ViewData["Title"] = "Customer List";
+}
+<link rel="stylesheet" href="~/css/customerlist.css" />
+
+<div class="hero-section" style="background-image: url('/Images/CrownGardenHills-Hero3.jpg');">
+    <div class="list-container">
+        <h2 class="text-center mb-4">Customer List</h2>
+
+
+        <!-- Added search filter-->
+
+        <form method="get" class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="searchFilter" class="form-label">Filter by</label>
+                    <select id="searchFilter" name="searchFilter" class="form-control">
+                        <option value="name" selected="@((Model.SearchFilter == "name").ToString().ToLower())">Name</option>
+                        <option value="membership" selected="@((Model.SearchFilter == "membership").ToString().ToLower())">Membership</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="search" class="form-label">Search</label>
+                    <input type="text" id="search" name="search" class="form-control" placeholder="Search by name or membership" value="@Model.Search" />
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end ">
+                    <button type="submit" class="btn btn-primary w-100 search-btn">Search</button>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end filter-btn">
+                    <a href="/Admin/CustomerList" class="btn btn-primary w-100">Clear Filter</a>
+                </div>
+            </div>
+        </form>
+       
+
+        <div class="table-responsive">
+            <table class="table table-dark table-bordered table-striped custom-table">
+                <thead>
+                    <tr>
+                        <th>Profile</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Membership</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var customer in Model.Customers)
+                    {
+                        <tr>
+                            <td data-label="Profile">
+                                <img src="@customer.ProfilePicture" width="40" height="40" class="rounded-circle" style="object-fit: cover;" />
+                            </td>
+                            <td data-label="Name">@customer.FirstName @customer.LastName</td>
+                            <td data-label="Email">@customer.Email</td>
+                            <td data-label="Membership">@customer.MembershipLevel</td>
+                            <td data-label="Actions">
+                                <a asp-page="EditCustomer" asp-route-id="@customer.Id" class="btn btn-sm btn-outline-light">Edit</a>
+                                <a asp-page="CustomerDetails" asp-route-id="@customer.Id" class="btn btn-sm btn-outline-secondary">Orders</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,25 +1,58 @@
 ﻿@page
 @model ResendEmailConfirmationModel
 @{
-    ViewData["Title"] = "Resend email confirmation";
+    Layout = "/Pages/Shared/_IdentityLayout.cshtml";
+    ViewData["Title"] = "Skicka bekräftelselänk igen";
 }
 
-<h1>@ViewData["Title"]</h1>
-<h2>Enter your email.</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email" class="form-label"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Resend</button>
-        </form>
+<form method="post">
+    <h2 class="text-center mb-3" style="color:white;">Skicka ny bekräftelselänk</h2>
+    <p class="text-center mb-4">Ange din e-postadress för att få en ny bekräftelselänk.</p>
+    <hr />
+
+    <div asp-validation-summary="All" class="text-danger mb-3" role="alert"></div>
+
+    <div class="input-group mb-3">
+        <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" required />
+        <button type="submit" class="btn btn-lg" style="background:#0b3d1f; color:white; width:25%;">Send Link</button>
     </div>
-</div>
+      
+    
+
+    <div class="login-links mt-4 text-center">
+        <p><a asp-page="./Login">Tillbaka till inloggning</a></p>
+    </div>
+</form>
+<style>
+
+    .input-group {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 1.5rem
+    }
+
+
+        .input-group input {
+            width: 60%;
+            padding: 1rem 0.75rem 0.25rem 0.75rem;
+            background: #222;
+            border: 1px solid #555;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+    .btn {
+        border: 1px solid #555;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 1rem;
+    }
+
+
+</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
