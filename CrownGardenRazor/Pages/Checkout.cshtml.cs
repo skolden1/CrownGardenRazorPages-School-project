@@ -124,7 +124,13 @@ namespace CrownGardenRazor.Pages
                 await _context.SaveChangesAsync();
             }
 
-           
+            //CartItemList = await _context.Carts
+            //    .Where(u => u.UserId == userId)
+            //    .Include(p => p.Product)
+            //    .ToListAsync();
+            //ändrade till redirect för att efter jag tog bort item så försvann totalvärdet men med redirect så sker ju en uppdatering och då uppdateras ju värdet
+            //genom att onget metoden körs igen
+            //det gör även att jag slipper uppdatera listan igen i denna metoden, då onget körs
             return RedirectToPage("Checkout");
         }
     }
