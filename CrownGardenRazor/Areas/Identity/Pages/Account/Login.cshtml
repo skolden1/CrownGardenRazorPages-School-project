@@ -2,34 +2,34 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Logga in";
+    ViewData["Title"] = "Log in";
 }
 
 <div class="hero-section">
     <div class="login-container">
         <form id="account" method="post">
             <div class="text-center mb-3">
-                <img class="logo" src="~/images/product13.png" alt="Logotyp" style="width:100px; height:100px;" />
+                <img class="logo" src="~/Images/CrownGardenLogga.png" alt="Logo" style="width:100px; height:100px;" />
             </div>
-            <h2 class="text-center mb-3" style="color:white;">Logga in</h2>
+            <h2 class="text-center mb-3" style="color:white;">Log In</h2>
             <hr />
 
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
 
             <div class="custom-floating-group mb-4">
                 <input asp-for="Input.Email" required />
-                <label asp-for="Input.Email">E-postadress</label>
+                <label asp-for="Input.Email">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-
+            <!--Added (view password function in (login) -->
             <div class="mb-3">
-                <label asp-for="Input.Password" class="form-label">Lösenord</label>
                 <div class="input-group">
-                    <input asp-for="Input.Password" class="form-control" id="passwordInput" placeholder="Ange ditt lösenord" />
-                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()" tabindex="-1">
-                        <i class="bi bi-eye" id="toggleIcon"></i>
+                    <input asp-for="Input.Password" class="form-control" id="passwordInput" autocomplete="current-password" placeholder="password" />
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('passwordInput', 'toggleIcon1')" tabindex="-1">
+                        <i class="bi bi-eye-slash" id="toggleIcon1"></i>
                     </button>
                 </div>
+                <label asp-for="Input.Password" class="form-label">Password</label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
 
@@ -37,24 +37,23 @@
                 <div class="form-check mb-0">
                     <input class="form-check-input" asp-for="Input.RememberMe" />
                     <label class="form-check-label" asp-for="Input.RememberMe" style="color:white;">
-                        Kom ihåg mig
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
                     </label>
                 </div>
 
                 <button id="login-submit" type="submit" class="btn btn-lg" style="background:#0b3d1f; color:white; width:40%; ">
-                    Logga in
+                    Log in
                 </button>
             </div>
 
             <div class="login-links mt-3 text-center">
-                <p><a asp-page="./ForgotPassword">Glömt ditt lösenord?</a></p>
-                <p><a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrera ny användare</a></p>
-                <p><a asp-page="./ResendEmailConfirmation">Skicka bekräftelselänk igen</a></p>
+                <p><a asp-page="./ForgotPassword">Forgot your password?</a></p>
+                <p><a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a></p>
+                <p><a asp-page="./ResendEmailConfirmation">Resend email confirmation</a></p>
             </div>
         </form>
     </div>
 </div>
-
 
 <style>
     .hero-section {
@@ -134,9 +133,12 @@
     }
 
     media (max-width: 576px) {
-        .login-container {
+        .login-container
+
+    {
         padding: 20px;
-        }
+    }
+
     }
 </style>
 
@@ -145,23 +147,22 @@
 
 
 
+    <!-- Fixed the function (not show password as default -->
     <script>
-        function togglePassword() {
-            const passwordInput = document.getElementById("passwordInput");
-            const toggleIcon = document.getElementById("toggleIcon");
+        function togglePassword(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
 
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
-                toggleIcon.classList.remove("bi-eye");
-                toggleIcon.classList.add("bi-eye-slash");
+                icon.classList.add("bi-eye");
+                icon.classList.remove("bi-eye-slash");
             } else {
                 passwordInput.type = "password";
-                toggleIcon.classList.remove("bi-eye-slash");
-                toggleIcon.classList.add("bi-eye");
+                icon.classList.add("bi-eye-slash");
+                icon.classList.remove("bi-eye");
             }
         }
     </script>
-
-
-
 }
+
