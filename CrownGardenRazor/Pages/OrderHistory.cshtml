@@ -31,7 +31,11 @@
         @foreach (var o in Model.OrderHistoryList)
         {
             <tr>
-                <td>@o.OrderDate.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <a asp-page="OrderReceipt" asp-route-id="@o.OrderId">
+                    @o.OrderDate.ToString("yyyy-MM-dd")
+                    </a>
+                </td>
                 <td>@o.OrderId</td>
                 <td>@o.TotalAmount.ToString("C")</td>
                 <td>@(o.PaymentStatus ? "Betald" : "Ej betald")</td>

@@ -3,6 +3,12 @@
     width: 100%;
 }
 
+.indexBody {
+    background-color: whitesmoke;
+}
+
+
+
 .header-p {
     position: absolute;
     left: 10%;
@@ -17,6 +23,7 @@
 .text-center {
     margin: 20px 0;
 }
+
 
 #productCarousel {
     padding: 20px 0;

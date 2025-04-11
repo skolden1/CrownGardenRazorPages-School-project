@@ -5,44 +5,46 @@
     string currentItem = "";
 }
 
-
-<div class="hero-image-container">
-    <img class="img-fluid" src="~/images/CrownGardenHills-Hero3.jpg" alt="Crown Garden Hills" />
-    <p class="header-p">Välkommen till Crown Garden! <br /> Vi ser fram emot ditt besök och medlemskap. <br /> Mer information hittar ni på vår om oss sida!</p>
-</div>
-
-<h2 class="text-center">Kika in på dagens rea!</h2>
-
-<div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        @for (int i = 0; i < Model.productList.Count; i += 3)
-        {
-            <div class="carousel-item @(i == 0 ? "active" : "")">
-                <div class="d-flex justify-content-center">
-                    @for (int j = i; j < i + 3 && j < Model.productList.Count; j++)
-                    {
-                        var product = Model.productList[j];
-                        <div class="carousel-item-product">
-                            <a asp-page="/ProductDetails" asp-route-id="@product.ProductId">
-                                <img class="d-block" style="width: 250px; height: auto; margin: 0 15px;" src="~/images/@product.ImageUrl" alt="@product.ProductName" />
-                            </a>
-                            <p>@product.ProductName - @product.Price.ToString("C")</p>
-                        </div>
-                    }
-                </div>
-            </div>
-        }
+<body class="indexBody">
+    <div class="hero-image-container">
+        <img class="img-fluid" src="~/images/CrownGardenHills-Hero3.jpg" alt="Crown Garden Hills" />
+        <p class="header-p">Välkommen till Crown Garden! <br /> Vi ser fram emot ditt besök och medlemskap. <br /> Mer information hittar ni på vår om oss sida!</p>
     </div>
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
+    <h2 class="text-center">Kika in på dagens rea!</h2>
+
+    <div id="productCarousel" class="carousel slide bg-white mb-5" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @for (int i = 0; i < Model.productList.Count; i += 3)
+            {
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <div class="d-flex justify-content-center">
+                        @for (int j = i; j < i + 3 && j < Model.productList.Count; j++)
+                        {
+                            var product = Model.productList[j];
+                            <div class="carousel-item-product">
+                                <a asp-page="/ProductDetails" asp-route-id="@product.ProductId">
+                                    <img class="d-block" style="width: 250px; height: auto; margin: 0 15px;" src="~/images/@product.ImageUrl" alt="@product.ProductName" />
+                                </a>
+                                <p>@product.ProductName - @product.Price.ToString("C")</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</body>
+
 
 
 <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
