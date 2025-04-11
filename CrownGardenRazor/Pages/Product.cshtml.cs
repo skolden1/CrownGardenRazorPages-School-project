@@ -1,21 +1,11 @@
-using Azure;
-using CrownGardenRazor.Areas.Identity.Data;
+
 using CrownGardenRazor.Datas;
 using CrownGardenRazor.Model;
-using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
-using NuGet.DependencyResolver;
-using System;
-using System.Diagnostics.Metrics;
-using System.Net.NetworkInformation;
-using System.Reflection;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace CrownGardenRazor.Pages
 {

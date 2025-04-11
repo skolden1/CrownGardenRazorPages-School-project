@@ -5,26 +5,44 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
+using Microsoft.Extensions.Logging;
 
 namespace CrownGardenRazor.Pages;
 
 public class IndexModel : PageModel
 {
-   
     private readonly AppDbContext _context;
-    private readonly UserManager<IdentityUser> _userManager; 
     private readonly IdentityUserContext _Icontext;
     private readonly ILogger<IndexModel> _logger;
 
-    
     public string UserMessage { get; set; }
+
+    public List<Product> productList { get; set; } = new();
+
     public IndexModel(ILogger<IndexModel> logger, AppDbContext context, IdentityUserContext Icontext)
     {
         _Icontext = Icontext;
         _context = context;
         _logger = logger;
-        //_userManager = userManager;
+    }
+
+    public async Task<IActionResult> OnGetAsync()
+    {
+        try
+        {
+
+            productList = await _context.Products
+                .OrderBy(p => Guid.NewGuid())
+                .Take(9)
+                .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching products for the index page.");
+            productList = new List<Product>();
+        }
+
+        return Page();
     }
 
     public async Task<IActionResult> OnPostDelete()
@@ -38,7 +56,7 @@ public class IndexModel : PageModel
             await _Icontext.SaveChangesAsync();
             return Page();
         }
-        
+
         return Page();
     }
 }

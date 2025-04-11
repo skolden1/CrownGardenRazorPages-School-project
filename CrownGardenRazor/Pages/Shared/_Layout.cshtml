@@ -37,13 +37,16 @@
                         </li>                     
                     </ul>
 
-                    <div>
+                    <div>@* lägg till länk till orderhistorik *@
+                        <a class="btn" asp-page="OrderHistory">
+                            <i class="bi bi-receipt-icon"></i>
+                        </a>
                         <a class="btn" asp-page="Checkout" >
                             <i class="bi bi-cart-icon"></i>
                         </a>
                         
                     </div>
-                    <!-- I moved the <partial name> outside of the <ul> so its align the Right side of Nav -->
+                    
                     <div class="d-flex ms-auto">
                         <partial name="_LoginPartial" />
                     </div>

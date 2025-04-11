@@ -26,23 +26,40 @@ else
                 {
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-12 col-md-4">
                                 <strong>@p.Product.ProductName</strong>                          
                             </div>
-                            <div class="col-md-2 text-center">
-                                <span>x @p.Quantity</span>
+                            <div class="col-12 col-md-2 text-center mt-2 mt-md-0">
+                               
+                                <div class="d-flex gap-2 justify-content-center align-content-center">
+                                    <form method="post" asp-page-handler="IncreaseQuantity">
+                                        <input type="hidden" name="productId" value="@p.ProductId" />
+                                        <button type="submit" class="btn btn-light rounded-circle fw-bold text-black border-0 d-flex justify-content-center align-items-center"
+                                                style="width: 40px; height: 40px; font-size: 1.5rem;">+</button>
+                                    </form>
+
+                                    <p class="mb-0 align-self-center"><strong>x @p.Quantity</strong> </p>
+
+                                    <form method="post" asp-page-handler="Delete">
+                                        <input type="hidden" name="cartItemId" value="@p.CartId" />
+                                        <button type="submit" class="btn btn-light rounded-circle fw-bold text-black border-0 d-flex justify-content-center align-items-center"
+                                                style="width: 40px; height: 40px; font-size: 1.5rem;">
+                                    -
+                                </button>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="col-md-3 text-center">
+
+                            <div class="col-12 col-md-3 text-center mt-2 mt-md-0">
                                 <span>@p.Product.Price.ToString("C") /st</span>
-                                
-                            </div>  
-                            <div class="col-md-3 text-center">
+                            </div>
+
+                            <div class="col-12 col-md-3 text-center mt-2 mt-md-0">
                                 <span><strong>Totalpris:</strong></span>
-                                <p class="d-inline-block">@((p.Quantity * p.Product.Price).ToString("C"))</p>
-                                <form method="post" asp-page-handler="Delete">
-                                    <input type="hidden" name="cartItemId" value="@p.CartId"/>
-                                    <button type="submit" class="btn btn-danger">Ta bort</button>
-                                </form>                     
+                                <p class="d-inline-block">
+                                    @((p.Quantity * p.Product.Price).ToString("C"))
+                                </p>
+                                                   
                             </div>
                         </div>             
                     </li>                 
