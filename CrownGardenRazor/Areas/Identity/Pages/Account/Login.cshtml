@@ -17,19 +17,23 @@
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
 
             <div class="custom-floating-group mb-4">
-                <input asp-for="Input.Email" required />
-                <label asp-for="Input.Email">Email</label>
+                <div class="input-group position-relative">
+                    <input asp-for="Input.Email" class="form-control" id="emailInput"  required />
+                    <label asp-for="Input.Email" class="floating-label">E-postadress</label>
+                </div>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <!--Added (view password function in (login) -->
-            <div class="mb-3">
+            <div class="custom-floating-group mb-3">
                 <div class="input-group">
-                    <input asp-for="Input.Password" class="form-control" id="passwordInput" autocomplete="current-password" placeholder="password" />
+                    <input asp-for="Input.Password" class="form-control" id="passwordInput" autocomplete="current-password"  />
+                     <label asp-for="Input.Password">Password</label>
                     <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('passwordInput', 'toggleIcon1')" tabindex="-1">
                         <i class="bi bi-eye-slash" id="toggleIcon1"></i>
+                       
                     </button>
                 </div>
-                <label asp-for="Input.Password" class="form-label">Password</label>
+              
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
 
@@ -81,8 +85,12 @@
         margin-bottom: 1.5rem;
     }
 
+        .custom-floating-group .input-group,
         .custom-floating-group input {
             width: 100%;
+        }
+
+        .custom-floating-group input {
             padding: 1rem 0.75rem 0.25rem 0.75rem;
             background: #222;
             border: 1px solid #555;
@@ -91,6 +99,11 @@
             font-size: 1rem;
             outline: none;
         }
+
+            .custom-floating-group input:focus {
+                background: #222 !important;
+                color: #fff !important;
+            }
 
         .custom-floating-group label {
             position: absolute;
@@ -101,7 +114,27 @@
             padding: 0 0.25rem;
             transition: 0.2s ease;
             pointer-events: none;
+            z-index: 1;
         }
+
+        .custom-floating-group input:focus + label,
+        .custom-floating-group input:not(:placeholder-shown) + label {
+            top: -0.5rem;
+            left: 0.6rem;
+            font-size: 0.75rem;
+            color: #fff;
+        }
+
+    /* Autofill fix */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px #222 inset !important;
+        -webkit-text-fill-color: white !important;
+        background-color: #222 !important;
+        color: #fff !important;
+    }
 
     .form-action-row {
         display: flex;
@@ -111,35 +144,17 @@
         flex-wrap: wrap;
     }
 
-    .custom-floating-group input:focus + label,
-    .custom-floating-group input:not(:placeholder-shown) + label {
-        top: -0.5rem;
-        left: 0.6rem;
-        font-size: 0.75rem;
-        color: #fff;
-    }
-
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active {
-        -webkit-box-shadow: 0 0 0 30px #222 inset !important;
-        -webkit-text-fill-color: white !important;
-    }
-
     .login-links a {
         color: white;
         text-decoration: none;
     }
 
-    media (max-width: 576px) {
-        .login-container
-
-    {
-        padding: 20px;
+    .input-group .btn {
+        z-index: 2;
     }
 
-    }
+   
+    
 </style>
 
 @section Scripts {

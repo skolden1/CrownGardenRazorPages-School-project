@@ -34,7 +34,25 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>                     
+                        </li>      
+                        @using CrownGardenRazor.Areas.Identity.Data
+                        @using Microsoft.AspNetCore.Identity
+                        @inject UserManager<IdentityUserTable> UserManager
+                        @inject SignInManager<IdentityUserTable> SignInManager
+
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            var currentUser = await UserManager.GetUserAsync(User);
+                            var isAdmin = await UserManager.IsInRoleAsync(currentUser, "Admin");
+
+                            if (isAdmin)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Admin/CustomerList">Customer List</a>
+                                </li>
+                            }
+                        }
+
                     </ul>
 
                     <div>
