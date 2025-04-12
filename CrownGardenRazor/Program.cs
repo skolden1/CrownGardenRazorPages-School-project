@@ -20,7 +20,7 @@ builder.Services.AddDbContext<IdentityUserContext>(options => options.UseSqlServ
 // Add Identity services to pass two types of identity
 builder.Services.AddIdentity<IdentityUserTable, IdentityRole>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = true;
+options.SignIn.RequireConfirmedAccount = true;
 })
 .AddEntityFrameworkStores<IdentityUserContext>()
 .AddDefaultUI()

@@ -1,23 +1,60 @@
 ﻿@page
 @model RegisterConfirmationModel
 @{
-    ViewData["Title"] = "Register confirmation";
+    ViewData["Title"] = "Konto Skapat";
+    Layout = "~/Pages/Shared/_Layout.cshtml"; 
 }
+<div class="hero-section">
+    <div class="login-container text-center">
+        <img src="~/images/product13.png" alt="Logotyp" style="width:80px; height:80px;" class="mb-3" />
+        <h2 class="text-white mb-3">@ViewData["Title"]</h2>
+        <hr class="bg-light" />
 
-<h1>@ViewData["Title"]</h1>
-@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-</p>
-    }
-    else
-    {
-<p>
-        Please check your email to confirm your account.
-</p>
-    }
-}
+        @if (Model.DisplayConfirmAccountLink)
+        {
+            <p class="text-white lead">
+                Ditt konto har skapats framgångsrikt.<br />
+            </p>
+            <a id="confirm-link" href="@Model.EmailConfirmationUrl" class="btn btn-success mt-3">Bekräfta Konto</a>
+        }
+        else
+        {
+            <p class="text-white lead">
+                Tack för din registrering! Vänligen kontrollera din e-post för att bekräfta ditt konto.
+            </p>
+        }
+    </div>
+</div>
 
+
+<style>
+    .hero-section {
+        background-image: url('@Url.Content("~/Images/CrownGardenHills-Hero3.jpg")');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-container {
+        background-color: rgba(34, 34, 34, 0.95);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 450px;
+        color: white;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+</style>

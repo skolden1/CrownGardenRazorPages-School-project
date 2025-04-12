@@ -9,31 +9,30 @@
     <div class="login-container">
         <form id="account" method="post">
             <div class="text-center mb-3">
-                <img class="logo" src="~/Images/CrownGardenLogga.png" alt="Logo" style="width:100px; height:100px;" />
+                <img class="logo" src="~/Images/CrownGardenLogga.png" alt="Logotyp" style="width:100px; height:100px;" />
             </div>
-            <h2 class="text-center mb-3" style="color:white;">Log In</h2>
+            <h2 class="text-center mb-3" style="color:white;">Logga In</h2>
             <hr />
 
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
 
             <div class="custom-floating-group mb-4">
                 <div class="input-group position-relative">
-                    <input asp-for="Input.Email" class="form-control" id="emailInput"  required />
+                    <input asp-for="Input.Email" class="form-control" id="emailInput" required />
                     <label asp-for="Input.Email" class="floating-label">E-postadress</label>
                 </div>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <!--Added (view password function in (login) -->
+
+            <!-- Visa lösenord (login) -->
             <div class="custom-floating-group mb-3">
                 <div class="input-group">
-                    <input asp-for="Input.Password" class="form-control" id="passwordInput" autocomplete="current-password"  />
-                     <label asp-for="Input.Password">Password</label>
+                    <input asp-for="Input.Password" class="form-control" id="passwordInput" autocomplete="current-password" />
+                    <label asp-for="Input.Password">Lösenord</label>
                     <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('passwordInput', 'toggleIcon1')" tabindex="-1">
                         <i class="bi bi-eye-slash" id="toggleIcon1"></i>
-                       
                     </button>
                 </div>
-              
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
 
@@ -45,19 +44,20 @@
                     </label>
                 </div>
 
-                <button id="login-submit" type="submit" class="btn btn-lg" style="background:#0b3d1f; color:white; width:40%; ">
-                    Log in
+                <button id="login-submit" type="submit" class="btn btn-lg" style="background:#0b3d1f; color:white; width:40%;">
+                    Logga in
                 </button>
             </div>
 
             <div class="login-links mt-3 text-center">
-                <p><a asp-page="./ForgotPassword">Forgot your password?</a></p>
-                <p><a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a></p>
-                <p><a asp-page="./ResendEmailConfirmation">Resend email confirmation</a></p>
+                <p><a asp-page="./ForgotPassword">Glömt lösenordet?</a></p>
+                <p><a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrera dig som ny användare</a></p>
+                <p><a asp-page="./ResendEmailConfirmation">Skicka bekräftelsemejlet igen</a></p>
             </div>
         </form>
     </div>
 </div>
+
 
 <style>
     .hero-section {

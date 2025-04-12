@@ -1,6 +1,4 @@
-html {
-  font-size: 14px;
-}
+
 
 @media (min-width: 768px) {
   html {
@@ -8,26 +6,25 @@ html {
   }
 }
 
-/*Youssef Ilham css*/
-.Profileimg {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-}
+
+
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+    font-size: 14px;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    margin-top: 20px;
 }
+
+
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
@@ -38,9 +35,6 @@ body {
   text-align: start;
 }
 
-body {
-    margin-top: 20px;
-}
 
 /*==================================================
   Post Contents CSS
@@ -129,3 +123,18 @@ img.profile-photo-sm {
     margin-left: 20px;
 }
 
+/*==================================================
+  Profile picture
+  ==================================================*/
+.Profileimg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+footer {
+    position: static !important;
+    width: 100% !important;
+    white-space: normal !important;
+}

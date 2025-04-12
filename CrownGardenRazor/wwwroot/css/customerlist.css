@@ -53,12 +53,6 @@
     margin-top: 5px;
 }
 
-/* Make table responsive */
-.table-responsive {
-    width: 100%;
-    overflow-x: auto;
-}
-
 @media (max-width: 768px) {
     .list-container {
         padding: 20px;
@@ -104,4 +98,6 @@
         .search-btn {
             margin-top: 5px;
         }
+
+    }
 }
