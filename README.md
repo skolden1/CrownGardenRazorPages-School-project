@@ -1,21 +1,7 @@
-# Web Development Project (Yrkeshögskola)
 
-This is a school project where I have created a website using HTML, CSS, and C# as part of my education at a Swedish vocational university (Yrkeshögskola). The goal of the project was to demonstrate my web development skills.
+## School project Razor Pages C#, SQL
 
-## My part
-In this project, I was responsible for creating the product page and everything related to products, including the shopping cart, checkout process, and product management. This involved:
-- Designing the product pages
-- Implementing the shopping cart functionality
-- Developing the checkout process
-- Ensuring proper handling of customer interactions (such as adding/removing items from the cart, updating quantities, etc.)
-- Creating a seamless user experience for purchasing products
-Together w Oscar Bagler and Sara Månsberg
-
-## Features:
-- Responsive design
-- Simple navigation
-- Showcase of my skills and experiences
-- CSS animations and effects
+This project allowed us to apply our skills in both front-end and back-end development, and to experience working as a development team.
 
 ## Installation
 To clone this project and run it locally, use the following command:
@@ -32,3 +18,21 @@ values                       ('Golfbollar', 'Olika typer av golfbollar'),
                              ('Tillbehör', 'Olika typer av tillbehör'),
                              ('Skor', 'Olika typer av skor'),
                              ('Golfbag', 'Olika typer av golfväskor');
+
+### Team Members and Roles
+
+We collaborated on the overall structure and design of the site. Each team member also had individual areas of responsibility:
+# Product section
+- **[skolden1 / Andreas]** – Developed the product section, including the product page, shopping cart, checkout process, and all related e-commerce functionality.
+- **[OscarBag / Oscar]** – Developed the product section, including the product page, shopping cart, checkout process, and all related e-commerce functionality.
+- **[sarawebd24 / Sara]** – Developed the product section, including the product page, shopping cart, checkout process, and all related e-commerce functionality.
+
+# Register & login / Admin  
+- **[YoussefKouliana / Youssef]** – [Optional: write more if you had more members]
+- **[IlhamAlf90 / Ilham]** – [Optional: write more if you had more members]
+
+# Forum
+- **[TheHousewife / Mattis]** – [Optional: write more if you had more members]
+- **[Thornedleaf / Oskar]** – [Optional: write more if you had more members]
+- **[shacro / Emil]** – [Optional: write more if you had more members]
+
