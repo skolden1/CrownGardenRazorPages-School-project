@@ -1,8 +1,43 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+    ViewData["Title"] = "Email Confirmed";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="hero-section">
+    <div class="login-container text-center">
+        <img src="~/images/product13.png" alt="Logo" style="width:80px; height:80px;" class="mb-3" />
+        <h2 class="text-white mb-3">@ViewData["Title"]</h2>
+        <hr class="bg-light" />
+
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background-image: url('@Url.Content("~/Images/CrownGardenHills-Hero3.jpg")');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-container {
+        background-color: rgba(34, 34, 34, 0.95);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 450px;
+        color: white;
+    }
+
+    .bg-light {
+        background-color: #fff !important;
+    }
+</style>

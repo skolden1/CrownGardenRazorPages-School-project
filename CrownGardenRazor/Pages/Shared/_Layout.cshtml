@@ -24,16 +24,16 @@
                 <div id="mainNavbar" class="navbar-collapse collapse d-md-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Hem</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Product">Products</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Product">Produkter</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Forum">Forum</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Policy</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/About">Om oss</a>
@@ -65,11 +65,12 @@
                         }
                     </ul>
 
-                    <div class="d-none d-md-flex align-items-center gap-2">
-                        <a class="btn" asp-page="OrderHistory">
+                    <div class="d-none d-md-flex align-items-center gap-2">                   
+                        <a class="btn" href="/OrderHistory">
                             <i class="bi bi-receipt-icon"></i>
                         </a>
-                        <a class="btn" asp-page="Checkout">
+
+                        <a class="btn" href="/Checkout">
                             <i class="bi bi-cart-icon"></i>
                         </a>
 

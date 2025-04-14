@@ -61,7 +61,7 @@
                             <td data-label="Membership">@customer.MembershipLevel</td>
                             <td data-label="Actions">
                                 <a asp-page="EditCustomer" asp-route-id="@customer.Id" class="btn btn-sm btn-outline-light">Edit</a>
-                                <a asp-page="CustomerDetails" asp-route-id="@customer.Id" class="btn btn-sm btn-outline-secondary">Orders</a>
+                                <a asp-page="/Admin/OrderDetails" asp-route-userId="@customer.Id" class="btn btn-sm btn-outline-secondary">Orders Details</a>
                             </td>
                         </tr>
                     }
