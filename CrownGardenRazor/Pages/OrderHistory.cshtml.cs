@@ -35,6 +35,7 @@ namespace CrownGardenRazor.Pages
                 .Include(o => o.OrderItems)
                 .ThenInclude(p => p.Product)
                 .Where(u => u.UserId == userId)
+                .OrderByDescending(d => d.OrderDate)
                 .ToListAsync();
 
             if (!OrderHistoryList.Any())
