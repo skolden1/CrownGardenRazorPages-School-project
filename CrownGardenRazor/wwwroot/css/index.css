@@ -41,6 +41,10 @@
     text-align: center;
 }
 
+    .carousel-item-product:hover {
+        opacity: 80%;
+    }
+
 .carousel-inner {
     display: flex;
 }

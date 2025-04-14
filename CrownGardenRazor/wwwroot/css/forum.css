@@ -1,0 +1,52 @@
+﻿.rows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.m-container {
+    margin-top: 10px;
+    cursor: pointer;
+    padding-left: 10px;
+    height: 7px;
+    display: inline-block;
+    width: 27px;
+    margin-left: auto;
+}
+
+.more-options-div {
+    position: absolute;
+    background-color: black;
+    width: 7px;
+    height: 7px;
+    border-radius: 100%;
+}
+
+    .more-options-div::before {
+        content: '';
+        position: absolute;
+        left: -10px;
+        background-color: black;
+        width: 7px;
+        height: 7px;
+        border-radius: 100%;
+    }
+
+    .more-options-div::after {
+        content: '';
+        position: absolute;
+        left: 10px;
+        background-color: black;
+        width: 7px;
+        height: 7px;
+        border-radius: 100%;
+    }
+
+.comments-options-form {
+    display: none;
+}
+
+.post-comment {
+    display: flex;
+    flex-direction: row;
+}

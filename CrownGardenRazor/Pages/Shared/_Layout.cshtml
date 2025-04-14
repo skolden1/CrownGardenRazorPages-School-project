@@ -13,28 +13,39 @@
 
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <header class="mt-4">
+        <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">CrownGardenRazor</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div id="mainNavbar" class="navbar-collapse collapse d-md-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Product">Products</a>
-                        </li>        
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Forum">Forum</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>      
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/About">Om oss</a>
+                        </li>
+                        <li class="nav-item d-md-none">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/OrderHistory">Orderhistorik</a>
+                        </li>
+                        <li class="nav-item d-md-none">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Checkout">Till kassan</a>
+                        </li>
+
+
                         @using CrownGardenRazor.Areas.Identity.Data
                         @using Microsoft.AspNetCore.Identity
                         @inject UserManager<IdentityUserTable> UserManager
@@ -52,19 +63,18 @@
                                 </li>
                             }
                         }
-
                     </ul>
 
-                    <div>@* lägg till länk till orderhistorik *@
+                    <div class="d-none d-md-flex align-items-center gap-2">
                         <a class="btn" asp-page="OrderHistory">
                             <i class="bi bi-receipt-icon"></i>
                         </a>
-                        <a class="btn" asp-page="Checkout" >
+                        <a class="btn" asp-page="Checkout">
                             <i class="bi bi-cart-icon"></i>
                         </a>
-                        
+
                     </div>
-                    
+
                     <div class="d-flex ms-auto">
                         <partial name="_LoginPartial" />
                     </div>
@@ -78,11 +88,69 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - CrownGardenRazor - <a asp-area="" asp-page="/Privacy">Privacy</a>
 
-            - Vill du kontakta oss? Klicka på denna <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">länk</a>
+    <footer class="footer bg-dark text-light pt-4 pb-3 mt-5">
+        <div class="container text-center">
+            <h5 class="mb-3">CrownGarden Project – TUC Sweden</h5>
+            <p class="mb-1">© @DateTime.Now.Year All rights reserved</p>
+
+            <hr class="bg-light">
+
+
+            <div class="mb-3">
+                <a class="text-light text-decoration-none me-3" asp-page="/Index">Home</a>
+                <a class="text-light text-decoration-none me-3" asp-page="/Product">Products</a>
+                <a class="text-light text-decoration-none me-3" asp-page="/Forum">Forum</a>
+                <a class="text-light text-decoration-none me-3" asp-page="/Privacy">Privacy</a>
+                <a class="text-light text-decoration-none me-3" asp-page="/About">About</a>
+            </div>
+
+
+            <p class="mb-1">Collaborators:</p>
+            <div class="row row-cols-2 row-cols-md-4 g-2 justify-content-center mb-3">
+                <div class="col">
+                    <a href="https://www.linkedin.com/in/youssef-kouliana-webbutvecklare/" target="_blank" class="text-light text-decoration-none">
+                        <i class="bi bi-linkedin"></i> Youssef Kouliana
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://www.linkedin.com/in/andreas-sj%C3%B6lander-12b661323/" target="_blank" class="text-light text-decoration-none">
+                        <i class="bi bi-linkedin"></i> Andreas Sjölander
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://www.linkedin.com/in/sara-m%C3%A5nsberg-1754b6174/" target="_blank" class="text-light text-decoration-none">
+                        <i class="bi bi-linkedin"></i> Sara Månsberg
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://www.linkedin.com/in/emil-karlsson-eriksson-3802ba324/" target="_blank" class="text-light text-decoration-none">
+                        <i class="bi bi-linkedin"></i> Emil Karlsson Eriksson
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://www.linkedin.com/in/oskar-josefsson-604984231/" target="_blank" class="text-light text-decoration-none">
+                        <i class="bi bi-linkedin"></i> Oskar Josefsson
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://www.linkedin.com/in/oscar-bagler-331569271/" target="_blank" class="text-light text-decoration-none">
+                        <i class="bi bi-linkedin"></i> Oscar Bagler
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://www.linkedin.com/in/mattis-ericsson-bergman-31700224a/" target="_blank" class="text-light text-decoration-none">
+                        <i class="bi bi-linkedin"></i> Mattis Ericsson Bergman
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://www.linkedin.com/in/ilham-alfayyad-4b5928260/" target="_blank" class="text-light text-decoration-none">
+                        <i class="bi bi-linkedin"></i> Ilham Alfayyad
+                    </a>
+                </div>
+            </div>
+
+            <small class="text-muted">Contact: info@crowngarden.se</small>
         </div>
     </footer>
 
@@ -93,4 +161,3 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-

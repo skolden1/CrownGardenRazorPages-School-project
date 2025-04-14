@@ -4,42 +4,41 @@
     ViewData["Title"] = "Orderhistorik";
 }
 
-@* @foreach (var o in Model.OrderHistoryList)
+@if (!string.IsNullOrWhiteSpace(Model.ErrorMsg))
 {
-    <p></p>
-    <p>@(o.PaymentStatus ? "Betald" : "Ej betald")</p>
-    <p>@o.OrderDate</p>
-    <p></p>
+    <div class="alert alert-danger">
+        @Model.ErrorMsg
+    </div>
+}
 
-    @foreach (var item in o.OrderItems)
-    {
-        <p>@item.Product.ProductName</p>
-    }
-} *@
-
-<h3 class="text-center mb-5 mt-5">Orderhistorik</h3>
-<table class="table table-striped table-bordered">
-    <thead class="thead-dark">
-        <tr>
-            <th>Datum</th>
-            <th>Ordernummer</th>
-            <th>Totalt pris</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var o in Model.OrderHistoryList)
-        {
+@if (Model.OrderHistoryList != null && Model.OrderHistoryList.Any())
+{
+    <h3 class="text-center mb-5 mt-5">Orderhistorik</h3>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
             <tr>
-                <td>
-                    <a asp-page="OrderReceipt" asp-route-id="@o.OrderId">
-                    @o.OrderDate.ToString("yyyy-MM-dd")
-                    </a>
-                </td>
-                <td>@o.OrderId</td>
-                <td>@o.TotalAmount.ToString("C")</td>
-                <td>@(o.PaymentStatus ? "Betald" : "Ej betald")</td>
+                <th>Datum</th>
+                <th>Ordernummer</th>
+                <th>Totalt pris</th>
+                <th>Status</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+
+            @foreach (var o in Model.OrderHistoryList)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="OrderReceipt" asp-route-id="@o.OrderId">
+                            @o.OrderDate.ToString("yyyy-MM-dd")
+                        </a>
+                    </td>
+                    <td>@o.OrderId</td>
+                    <td>@o.TotalAmount.ToString("C")</td>
+                    <td>@(o.PaymentStatus ? "Betald" : "Ej betald")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}

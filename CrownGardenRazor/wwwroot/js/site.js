@@ -1,4 +1,40 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿let moreOptionsClicked = [];
 
-// Write your JavaScript code.
+const moreOptionsDiv = document.querySelectorAll(".m-container");
+const commentsOptionsForms = document.querySelectorAll(".comments-options-form");
+
+const onMoreOptionsClick = (moreOp) => {
+    for (let i = 0; i < moreOptionsDiv.length; i++) {
+        if (moreOp === moreOptionsDiv[i]) {
+            if (moreOptionsClicked[i] === false) {
+                changeDisplay(i, true);
+                moreOptionsClicked[i] = true;
+            }
+            else {
+                changeDisplay(i, false);
+                moreOptionsClicked[i] = false;
+            }
+        }
+    }
+}
+
+const changeDisplay = (moreOptionsDivIndex, showDisplay) => {
+    let firstIndex = moreOptionsDivIndex * 2;
+    let secondIndex = firstIndex + 1;
+
+    if (showDisplay === true) {
+        commentsOptionsForms[firstIndex].style.display = "block";
+        commentsOptionsForms[secondIndex].style.display = "block";
+    }
+    else {
+        commentsOptionsForms[firstIndex].style.display = "none";
+        commentsOptionsForms[secondIndex].style.display = "none";
+    }
+
+}
+
+moreOptionsDiv.forEach(moreOp => {
+    moreOp.addEventListener("click", () => onMoreOptionsClick(moreOp));
+    moreOptionsClicked.push(false);
+})
+

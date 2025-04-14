@@ -2,6 +2,11 @@ html {
   font-size: 14px;
 }
 
+a {
+    color: forestgreen !important;
+    text-decoration: none;
+}
+
 body {
     background-color: whitesmoke;
 }
@@ -30,9 +35,6 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-}
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
@@ -134,3 +136,9 @@ img.profile-photo-sm {
     margin-left: 20px;
 }
 
+
+footer {
+    position: static !important;
+    width: 100% !important;
+    white-space: normal !important;
+}

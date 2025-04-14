@@ -1,6 +1,7 @@
 using CrownGardenRazor.Areas.Identity.Data;
 using CrownGardenRazor.Datas;
 using CrownGardenRazor.Model;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -24,24 +25,36 @@ namespace CrownGardenRazor.Pages
 
         [BindProperty]
         public int PostId { get; set; }
-        public ForumModel(AppDbContext appDbContext, IdentityUserContext indentityContext)
+
+        [BindProperty]
+        public bool ShowEditOptions { get; set; } = true;
+
+        [BindProperty]
+        public int CommentId { get; set; }
+
+        private readonly UserManager<IdentityUserTable> _userManager;
+
+        [BindProperty]
+        public int CurrentCommentId { get; set; }
+        public ForumModel(AppDbContext appDbContext, IdentityUserContext indentityContext, UserManager<IdentityUserTable> UserManager)
         {
             _appDbContext = appDbContext;
             _indentityContext = indentityContext;
+            _userManager = UserManager;
         }
         public void OnGet()
         {
             SetPosts();
         }
-        public List<(string, string)> GetCommentsForPost(PostModel post)
+        public List<(string, string, int)> GetCommentsForPost(PostModel post)
         {
             List<PostCommentLinkModel> relevantPostCommentLinks = _appDbContext.PostCommentLinks.Where(pl => pl.PostId == post.Id).ToList();
 
-            List<(string, string)> output = new List<(string, string)>();
+            List<(string, string, int)> output = new List<(string, string, int)>();
 
             foreach (PostCommentLinkModel postCommentLink in relevantPostCommentLinks)
             {
-                (string, string) tuple = (_appDbContext.Comments.FirstOrDefault(comment => comment.Id == postCommentLink.CommentId).Comment, _appDbContext.Comments.FirstOrDefault(comment => comment.Id == postCommentLink.CommentId).UserId);
+                (string, string, int) tuple = (_appDbContext.Comments.FirstOrDefault(comment => comment.Id == postCommentLink.CommentId).Comment, _appDbContext.Comments.FirstOrDefault(comment => comment.Id == postCommentLink.CommentId).UserId, postCommentLink.CommentId);
                 output.Add(tuple);
             }
 
@@ -77,6 +90,7 @@ namespace CrownGardenRazor.Pages
                 };
 
                 _appDbContext.Posts.Add(post);
+
                 _appDbContext.SaveChanges();
 
                 SetPosts();
@@ -100,9 +114,42 @@ namespace CrownGardenRazor.Pages
 
             return RedirectToPage();
         }
+        public IActionResult OnPostEditComment()
+        {
+            ShouldEditCommentModel? shouldEditComment = _appDbContext.ShouldEditComment.FirstOrDefault(s => (s.PostId == PostId) && (s.UserId == GetSessionUserId()));
+
+            if (shouldEditComment == null)
+            {
+                _appDbContext.ShouldEditComment.Add(new ShouldEditCommentModel { CommentId = CommentId, PostId = PostId, UserId = GetSessionUserId() });
+            }
+
+            _appDbContext.SaveChanges();
+
+            return RedirectToPage();
+        }
+        public IActionResult OnPostDeleteComment()
+        {
+            PostCommentLinkModel postCommentLink = _appDbContext.PostCommentLinks.FirstOrDefault(postC => postC.CommentId == CommentId);
+            _appDbContext.PostCommentLinks.Remove(postCommentLink);
+
+            CommentModel comment = _appDbContext.Comments.Find(CommentId);
+            _appDbContext.Comments.Remove(comment);
+
+            ShouldEditCommentModel? shouldEditComment = _appDbContext.ShouldEditComment.FirstOrDefault(s => s.CommentId == CommentId);
+
+            if (shouldEditComment != null)
+            {
+                _appDbContext.ShouldEditComment.Remove(shouldEditComment);
+            }
+
+            _appDbContext.SaveChanges();
+
+            return RedirectToPage();
+        }
         public string GetSessionUserId()
         {
-            return _indentityContext.Users.FirstOrDefault(user => user.Email == User.Identity.Name)?.Id ?? "-1";
+            //return _indentityContext.Users.FirstOrDefault(user => user.Email == User.Identity.Name)?.Id ?? "-1";
+            return _userManager.GetUserId(User);
         }
         public IActionResult OnPostLike()
         {
@@ -111,7 +158,7 @@ namespace CrownGardenRazor.Pages
                 return RedirectToPage();
             }
 
-            string loggedInUserId = GetSessionUserId(); ;
+            string loggedInUserId = GetSessionUserId(); 
 
             PostLikeModel? postLikeModel = _appDbContext.PostLikes.FirstOrDefault(postLike => (postLike.UserId == loggedInUserId) && (postLike.PostId == PostId));
 
@@ -149,6 +196,18 @@ namespace CrownGardenRazor.Pages
             return _indentityContext.Users.FirstOrDefault(user => user.Id == userId).ProfilePicture;
         }
 
+        public string GetPlaceHolderForPost(int postId)
+        {
+
+            string output = "Post Comment";
+
+            if (_appDbContext.ShouldEditComment.FirstOrDefault(s => (s.PostId == postId) && (s.UserId == GetSessionUserId())) != null)
+            {
+                output = "Edit Comment";
+            }
+
+            return output;
+        }
         private void AddLikesNewToPost()
         {
             PostLikeModel postlikeModel = new PostLikeModel { HasLiked = true, PostId = this.PostId, UserId = GetSessionUserId() };
@@ -172,9 +231,15 @@ namespace CrownGardenRazor.Pages
 
         public IActionResult OnPostComment()
         {
-
             if (User.Identity.Name == null)
             {
+                return RedirectToPage();
+            }
+
+            if (_appDbContext.ShouldEditComment.FirstOrDefault(s => (s.PostId == PostId) && (s.UserId == GetSessionUserId())) != null)
+            {
+                EditComment();
+
                 return RedirectToPage();
             }
 
@@ -193,9 +258,19 @@ namespace CrownGardenRazor.Pages
 
             CommentText = "";
 
-            SetPosts();
-
             return RedirectToPage(); // för att tömma commentar fältet efter post
+        }
+
+        private void EditComment()
+        {
+            ShouldEditCommentModel shouldEditCommentModel = _appDbContext.ShouldEditComment.FirstOrDefault(s => (s.UserId == GetSessionUserId()) && (s.PostId == PostId));
+
+            CommentModel comment = _appDbContext.Comments.Find(shouldEditCommentModel.CommentId);
+            comment.Comment = CommentText;
+
+            _appDbContext.ShouldEditComment.Remove(shouldEditCommentModel);
+
+            _appDbContext.SaveChanges();
         }
 
         private async Task UploadPostImage()
@@ -237,9 +312,9 @@ namespace CrownGardenRazor.Pages
         {
             return userId == GetSessionUserId();
         }
-        public string GetEmailForPost(string UserId)
+        public string GetEmailForPost(string userId)
         {
-            return _indentityContext.Users.FirstOrDefault(user => user.Id == UserId).Email;
+            return _indentityContext.Users.FirstOrDefault(user => user.Id == userId).Email;
         }
     }
 }

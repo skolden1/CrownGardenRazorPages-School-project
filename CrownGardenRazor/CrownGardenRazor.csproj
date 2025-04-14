@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="Pages\Confirmation.cshtml" />
+    <Content Remove="wwwroot\css\NewFile.txt" />
   </ItemGroup>
 
   <ItemGroup>

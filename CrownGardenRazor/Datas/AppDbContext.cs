@@ -24,6 +24,7 @@ namespace CrownGardenRazor.Datas
         public DbSet<CommentModel> Comments { get; set; }
         public DbSet<PostCommentLinkModel> PostCommentLinks { get; set; }
         public DbSet<PostLikeModel> PostLikes { get; set; }
+        public DbSet<ShouldEditCommentModel> ShouldEditComment { get; set; }
 
 
     }

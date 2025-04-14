@@ -19,7 +19,7 @@ namespace CrownGardenRazor.Pages
         }
 
         public string ErrorMsg { get; set; }
-        public List<Order> OrderHistoryList  { get; set; }
+        public List<Order> OrderHistoryList { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -28,7 +28,7 @@ namespace CrownGardenRazor.Pages
             if (userId == null)
             {
                 ErrorMsg = "Du måste logga in för att se din orderhistorik";
-                return RedirectToPage("/Identity/Account/Login");
+                return Page();
             }
 
             OrderHistoryList = await _context.Orders
@@ -37,7 +37,7 @@ namespace CrownGardenRazor.Pages
                 .Where(u => u.UserId == userId)
                 .ToListAsync();
 
-            if (OrderHistoryList == null || !OrderHistoryList.Any())
+            if (!OrderHistoryList.Any())
             {
                 ErrorMsg = "Du har inga tidigare ordrar";
                 return Page();

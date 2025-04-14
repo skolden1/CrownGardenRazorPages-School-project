@@ -4,7 +4,7 @@
 }
 
 a{
-    color: forestgreen;
+    color: forestgreen !important;
     text-decoration: none;
 }
 

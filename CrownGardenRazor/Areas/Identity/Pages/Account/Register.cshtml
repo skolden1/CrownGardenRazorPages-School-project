@@ -7,110 +7,109 @@
 
 <!-- Hero Section -->
 <div class="hero-section text-center" style="background-image: url('/Images/CrownGardenHills-Hero3.jpg'); color: #fff; padding: 200px 20px;">
-    <h1>Membership</h1>
-    <h3>AN ICONIC GOLFING EXPERIENCE</h3>
-
+    <h1>Medlemskap</h1>
+    <h3>EN IKONISK GOLFUPPLEVELSE</h3>
 </div>
-
 
 <div class="container-fluid golf-resort-bg">
     <div class="row justify-content-start align-items-center" style="min-height: 100vh;">
         <div class="col-md-12 text-center mb-5 mt-5">
-            <h3>Why Choose CrownGarden Resort?</h3>
+            <h3>Varför välja CrownGarden Resort?</h3>
             <p>
-                Nestled in a stunning natural landscape, CrownGarden Resort is more than a golf destination—it’s a retreat for those seeking exceptional leisure and refined experiences.
-                From the first drive to the final putt, each hole offers breathtaking views and carefully crafted challenges. With our warm hospitality and world-class amenities,
-                you’ll feel at home whether you’re chasing a personal best or simply enjoying the scenic beauty
+                Inbäddat i ett fantastiskt naturlandskap är CrownGarden Resort mer än en golfdestination – det är en tillflyktsort för dig som söker exceptionell avkoppling och förfinade upplevelser.
+                Från första utslaget till sista putten erbjuder varje hål en hisnande utsikt och noggrant utformade utmaningar. Med vår varma gästfrihet och världsklassiga faciliteter
+                kommer du att känna dig som hemma, oavsett om du jagar ett personligt rekord eller bara njuter av den natursköna skönheten.
             </p>
         </div>
         <div class="col-md-6">
             <div class="card shadow-lg">
                 <div class="card-header text-center" style="background: linear-gradient(45deg, #0b3d1f, #103c1f); color: #fff;">
-
-                    <h3>Join Now exclusive club</h3>
+                    <h3>Bli medlem i vår exklusiva klubb</h3>
                 </div>
                 <div class="card-body">
                     <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label asp-for="Input.FirstName" class="form-label">First Name</label>
-                            <input asp-for="Input.FirstName" class="form-control" placeholder="Enter your first name" />
+                            <label asp-for="Input.FirstName" class="form-label">Förnamn</label>
+                            <input asp-for="Input.FirstName" class="form-control" placeholder="Ange ditt förnamn" />
                             <span asp-validation-for="Input.FirstName" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="Input.LastName" class="form-label">Last Name</label>
-                            <input asp-for="Input.LastName" class="form-control" placeholder="Enter your last name" />
+                            <label asp-for="Input.LastName" class="form-label">Efternamn</label>
+                            <input asp-for="Input.LastName" class="form-control" placeholder="Ange ditt efternamn" />
                             <span asp-validation-for="Input.LastName" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Input.MembershipLevel" class="form-label">Membership Level</label>
+                            <label asp-for="Input.MembershipLevel" class="form-label">Medlemsnivå</label>
                             <select asp-for="Input.MembershipLevel" class="form-select">
-                                <option value="">Select Membership</option>
-                                <option value="Gold">Gold</option>
+                                <option value="">Välj medlemskap</option>
+                                <option value="Gold">Guld</option>
                                 <option value="Silver">Silver</option>
-                                <option value="Bronze">Bronze</option>
+                                <option value="Bronze">Brons</option>
                             </select>
                             <span asp-validation-for="Input.MembershipLevel" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="Input.Email" class="form-label">Email</label>
-                            <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
+                            <label asp-for="Input.Email" class="form-label">E-post</label>
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="namn@exempel.se" />
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
                         </div>
 
-                        <!--Added (view password function aven in (confirmPassword) field -->
-
+                        <!-- Visa lösenord även i bekräftelsefältet -->
                         <div class="mb-3">
                             <div class="input-group">
-                                <input asp-for="Input.Password" class="form-control" id="passwordInput" autocomplete="current-password" placeholder="password" />
+                                <input asp-for="Input.Password" class="form-control" id="passwordInput" autocomplete="current-password" placeholder="lösenord" />
                                 <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('passwordInput', 'toggleIcon1')" tabindex="-1">
                                     <i class="bi bi-eye-slash" id="toggleIcon1"></i>
                                 </button>
                             </div>
-                            <label asp-for="Input.Password" class="form-label">Password</label>
+                            <label asp-for="Input.Password" class="form-label">Lösenord</label>
                             <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            <div class="form-text mt-2" style="font-size: 0.9rem; color: #6c757d;">
+                                Ditt lösenord måste innehålla:
+                                <ul class="password-rules small text-start mb-0" style="padding-left: 1.2rem;">
+                                    <li id="length-rule">Minst 6 tecken</li>
+                                    <li id="uppercase-rule">Minst 1 versal (A–Z)</li>
+                                    <li id="lowercase-rule">Minst 1 gemen (a–z)</li>
+                                    <li id="number-rule">Minst 1 siffra (0–9)</li>
+                                    <li id="special-rule">Minst 1 specialtecken </li>
+                                </ul>
+                            </div>
                         </div>
-
 
                         <div class="form-floating mb-3">
                             <div class="input-group">
-                                <input asp-for="Input.ConfirmPassword" class="form-control" id="confirmPasswordInput" autocomplete="new-password" placeholder="Re-enter your password" />
+                                <input asp-for="Input.ConfirmPassword" class="form-control" id="confirmPasswordInput" autocomplete="new-password" placeholder="Bekräfta lösenord" />
                                 <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('confirmPasswordInput', 'toggleIcon2')" tabindex="-1">
                                     <i class="bi bi-eye-slash" id="toggleIcon2"></i>
                                 </button>
                             </div>
-
                             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                         </div>
 
-                        <!-- Changed profile picture layout -->
+                        <!-- Ändrat layout för profilbild -->
                         <div class="mb-3">
-                            <label for="profilePicture" class="form-label">Profile Picture</label>
-
+                            <label for="profilePicture" class="form-label">Profilbild</label>
                             <div class="border rounded shadow-sm p-2" style="height: 200px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
                                 <img id="profilePreview"
                                      src="/ProfilePictures/DefaultProfileImage.png"
-                                     alt="Profile Preview"
+                                     alt="Förhandsvisning av profilbild"
                                      style="max-height: 100%; max-width: 100%; object-fit: cover;" />
                             </div>
-
                             <input type="file" class="form-control mt-2" id="profilePicture" name="ProfilePicture" accept="image/*" onchange="previewProfileImage(event)" />
                         </div>
 
-
-
-                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-
-
+                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrera</button>
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    <small>By clicking Sign Up, you agree to our <a href="#">Terms of Service</a>, <a href="#">Data Policy</a>, and <a href="#">Cookie Policy</a></small>
+                    <small>Genom att klicka på Registrera godkänner du våra <a href="#">Användarvillkor</a>, <a href="#">Datapolicy</a> och <a href="#">Cookiepolicy</a></small>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <style>
     .hero-section {
@@ -120,8 +119,10 @@
         background-repeat: no-repeat;
         min-height: 100vh;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        text-align: center;
     }
 
     .login-container {
@@ -189,12 +190,31 @@
         text-decoration: none;
     }
 
-    media (max-width: 576px) {
-        .login-container
+    /* css for password rule using ::before to show either if the rule is met or not */
 
-    {
-        padding: 20px;
+    .password-rules li {
+        position: relative;
+        padding-left: 24px;
+        margin-bottom: 6px;
+        color: #6c757d;
     }
+
+        .password-rules li::before {
+            content: "❌";
+            position: absolute;
+            left: 0;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .password-rules li.valid {
+            color: #198754;
+        }
+
+            .password-rules li.valid::before {
+                content: "✅";
+                color: #198754;
+            }
 
     }
 </style>
@@ -205,37 +225,52 @@
 
     <!-- Fixed the function (not show password as default -->
     <script>
-        function togglePassword(inputId, iconId) {
-            const passwordInput = document.getElementById(inputId);
-            const icon = document.getElementById(iconId);
+            function togglePassword(inputId, iconId) {
+                const passwordInput = document.getElementById(inputId);
+                const icon = document.getElementById(iconId);
 
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                icon.classList.add("bi-eye");
-                icon.classList.remove("bi-eye-slash");
-            } else {
-                passwordInput.type = "password";
-                icon.classList.add("bi-eye-slash");
-                icon.classList.remove("bi-eye");
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    icon.classList.add("bi-eye");
+                    icon.classList.remove("bi-eye-slash");
+                } else {
+                    passwordInput.type = "password";
+                    icon.classList.add("bi-eye-slash");
+                    icon.classList.remove("bi-eye");
+                }
             }
-        }
-    </script>
 
-    <!-- Added script for the profile picture in (register)-->
-    <script>
-        function previewProfileImage(event) {
-            const preview = document.getElementById('profilePreview');
-            const file = event.target.files[0];
 
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                preview.src = '/ProfilePictures/DefaultProfileImage.png';
+        <!-- Added script for the profile picture in (register)-->
+
+            function previewProfileImage(event) {
+                const preview = document.getElementById('profilePreview');
+                const file = event.target.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '/ProfilePictures/DefaultProfileImage.png';
+                }
             }
-        }
+
+
+                 document.addEventListener("DOMContentLoaded", function () {
+                const passwordInput = document.getElementById("passwordInput");
+
+                passwordInput.addEventListener("input", function () {
+                    const val = passwordInput.value;
+
+                    document.getElementById("length-rule").classList.toggle("valid", val.length >= 6);
+                    document.getElementById("uppercase-rule").classList.toggle("valid", /[A-Z]/.test(val));
+                    document.getElementById("lowercase-rule").classList.toggle("valid", /[a-z]/.test(val));
+                    document.getElementById("number-rule").classList.toggle("valid", /[0-9]/.test(val));
+                    document.getElementById("special-rule").classList.toggle("valid", /[^A-Za-z0-9]/.test(val));
+                });
+            });
     </script>
 }

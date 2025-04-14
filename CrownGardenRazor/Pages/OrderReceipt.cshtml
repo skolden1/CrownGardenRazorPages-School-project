@@ -1,6 +1,58 @@
 ﻿@page
 @model CrownGardenRazor.Pages.OrderReceiptModel
 @{
+    ViewData["Title"] = "Kvitto";
 }
 
-<p>@Model.Order.</p>
+
+<div class="container mt-5">
+    @if (Model.Order != null)
+    {
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4>Kvitto</h4>
+            </div>
+            <div class="card-body">
+                <h5>Ordernummer: @Model.Order.OrderId</h5>
+                <p><strong>Beställningsdatum:</strong> @Model.Order.OrderDate.ToString("yyyy-MM-dd HH:mm")</p>
+                <p><strong>Levereras till: </strong></p>
+                <address>
+                    Jane Janne Doe
+                    <br>
+                    Kingstreet 1212
+                    <br>
+                    55318 Jönköping
+                </address>
+                <h5 class="mt-4">Orderdetaljer:</h5>
+                <ul class="list-group">
+                    @foreach (var item in Model.Order.OrderItems)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <strong>@item.Product.ProductName</strong>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@($"x{item.Quantity}") - @(item.Price.ToString("C"))
+                                    <div class="pl-5">
+                                        <span class="text-muted"><em>@((item.Quantity * item.Price).ToString("C"))</em></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                    }
+                </ul>
+                <hr />
+                <div class="d-flex justify-content-between">
+                    <h5 class="text-right">Totalt belopp:</h5>
+                    <h5 class="text-right">@Model.Order.TotalAmount.ToString("C")</h5>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger mt-4">
+            <p>Ingen order hittades.</p>
+        </div>
+    }
+</div>
