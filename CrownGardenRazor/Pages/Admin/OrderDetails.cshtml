@@ -1,0 +1,43 @@
+﻿@page
+@model CrownGardenRazor.Pages.Admin.OrderDetailsModel
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Order Details</h2>
+
+    @if (Model.Orders != null && Model.Orders.Any())
+    {
+        foreach (var order in Model.Orders)
+        {
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    Order #: @order.OrderId &nbsp;|&nbsp; Date: @order.OrderDate.ToShortDateString()
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var item in order.OrderItems)
+                        {
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div>
+                                    <strong>@item.Product.ProductName</strong><br />
+                                    <small class="text-muted">Price: @item.Product.Price kr</small>
+                                </div>
+                                <div>
+                                    <strong>Qty:</strong> @item.Quantity
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            No orders found for this user.
+        </div>
+    }
+</div>

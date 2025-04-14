@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrownGardenRazor.Pages.Admin
 {
-    // [Authorize(Roles = "Admin")] 
+     [Authorize(Roles = "Admin")] 
     public class CustomerListModel : PageModel
     {
         private readonly UserManager<IdentityUserTable> _userManager;

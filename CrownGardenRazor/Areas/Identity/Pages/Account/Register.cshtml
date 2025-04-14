@@ -96,9 +96,12 @@
                                      alt="Förhandsvisning av profilbild"
                                      style="max-height: 100%; max-width: 100%; object-fit: cover;" />
                             </div>
-                            <input type="file" class="form-control mt-2" id="profilePicture" name="ProfilePicture" accept="image/*" onchange="previewProfileImage(event)" />
-                        </div>
+                            <!-- Ändrat layout för profilbild  -->
+                            <!-- we have problem with this one Ilham she uder Ilham used name="ProfilePicture" but in register.cshtml.cs i bound the property as UploadedImage -->
+                           @*  <input type="file" class="form-control mt-2" id="profilePicture" name="ProfilePicture" accept="image/*" onchange="previewProfileImage(event)" /> *@
+                            <input asp-for="Input.UploadedImage" class="form-control mt-2" accept="image/*" onchange="previewProfileImage(event)" />
 
+                        </div>
                         <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrera</button>
                     </form>
                 </div>

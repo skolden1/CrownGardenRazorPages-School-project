@@ -11,15 +11,26 @@
         var CurrentUser = UserManager.Users.FirstOrDefault(u => u.Id == UserId);
 
         <li class="nav-item">
-            <img class="Profileimg" src="@CurrentUser.ProfilePicture" alt="Profile Picture" />
+            <img class="Profileimg"
+                 src="@CurrentUser.ProfilePicture"
+                 alt="Profile Picture"
+                 style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;" />
         </li>
 
         <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@CurrentUser.FirstName!</a>
+            <a id="manage" class="nav-link text-dark"
+               asp-area="Identity"
+               asp-page="/Account/Manage/Index"
+               title="Manage">
+                @CurrentUser.FirstName
+            </a>
         </li>
 
         <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+            <form id="logoutForm" class="form-inline"
+                  asp-area="Identity"
+                  asp-page="/Account/Logout"
+                  asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
                 <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
             </form>
         </li>
@@ -27,10 +38,14 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link text-dark" id="register"
+               asp-area="Identity"
+               asp-page="/Account/Register">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-dark" id="login"
+               asp-area="Identity"
+               asp-page="/Account/Login">Login</a>
         </li>
     }
 </ul>
