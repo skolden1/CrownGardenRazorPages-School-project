@@ -32,7 +32,7 @@ We collaborated on the overall structure and design of the site. Each team membe
 - **[IlhamAlf90 / Ilham Aldayyad]** – Developed custom user authentication and authorization using ASP.NET Core Identity, including Extended user profiles and Admin functionality.
 
 # Forum
-- **[TheHousewife / Mattis Ericsson Bergman]** – [Optional: write more if you had more members]
-- **[Thornedleaf / Oskar Josefsson]** – [Optional: write more if you had more members]
-- **[shacro / Emil Karlsson Eriksson]** – [Optional: write more if you had more members]
+- **[TheHousewife / Mattis Ericsson Bergman]** – [...]
+- **[Thornedleaf / Oskar Josefsson]** – [...]
+- **[shacro / Emil Karlsson Eriksson]** – [...]
 
