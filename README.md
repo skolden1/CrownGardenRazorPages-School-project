@@ -23,16 +23,16 @@ values                       ('Golfbollar', 'Olika typer av golfbollar'),
 
 We collaborated on the overall structure and design of the site. Each team member also had individual areas of responsibility:
 # Product section
-- **[skolden1 / Andreas]** – Developed the product section, including the product page, shopping cart, checkout process, and all related e-commerce functionality.
-- **[OscarBag / Oscar]** – Developed the product section, including the product page, shopping cart, checkout process, and all related e-commerce functionality.
-- **[sarawebd24 / Sara]** – Developed the product section, including the product page, shopping cart, checkout process, and all related e-commerce functionality.
+- **[skolden1 / Andreas Sjölander]** – Developed the product section, including the product page, shopping cart, checkout process, and all related e-commerce functionality.
+- **[OscarBag / Oscar Bagler]** – Developed the product section, including the product page, shopping cart, checkout process, and all related e-commerce functionality.
+- **[sarawebd24 / Sara Månsberg]** – Developed the product section, including the product page, shopping cart, checkout process, and all related e-commerce functionality.
 
 # Register & login / Admin  
-- **[YoussefKouliana / Youssef]** – [Optional: write more if you had more members]
-- **[IlhamAlf90 / Ilham]** – [Optional: write more if you had more members]
+- **[YoussefKouliana / Youssef Kouliana]** – [Optional: write more if you had more members]
+- **[IlhamAlf90 / Ilham Aldayyad]** – [Optional: write more if you had more members]
 
 # Forum
-- **[TheHousewife / Mattis]** – [Optional: write more if you had more members]
-- **[Thornedleaf / Oskar]** – [Optional: write more if you had more members]
-- **[shacro / Emil]** – [Optional: write more if you had more members]
+- **[TheHousewife / Mattis Ericsson Bergman]** – [Optional: write more if you had more members]
+- **[Thornedleaf / Oskar Josefsson]** – [Optional: write more if you had more members]
+- **[shacro / Emil Karlsson Eriksson]** – [Optional: write more if you had more members]
 
