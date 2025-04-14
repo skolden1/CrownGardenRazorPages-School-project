@@ -28,8 +28,8 @@ We collaborated on the overall structure and design of the site. Each team membe
 - **[sarawebd24 / Sara Månsberg]** – Developed the product section, including the product page, shopping cart, checkout process, and all related e-commerce functionality.
 
 # Register & login / Admin  
-- **[YoussefKouliana / Youssef Kouliana]** – [Optional: write more if you had more members]
-- **[IlhamAlf90 / Ilham Aldayyad]** – [Optional: write more if you had more members]
+- **[YoussefKouliana / Youssef Kouliana]** – Developed custom user authentication and authorization using ASP.NET Core Identity, including Extended user profiles and Admin functionality.
+- **[IlhamAlf90 / Ilham Aldayyad]** – Developed custom user authentication and authorization using ASP.NET Core Identity, including Extended user profiles and Admin functionality.
 
 # Forum
 - **[TheHousewife / Mattis Ericsson Bergman]** – [Optional: write more if you had more members]
