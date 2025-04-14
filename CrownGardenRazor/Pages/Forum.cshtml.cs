@@ -123,6 +123,10 @@ namespace CrownGardenRazor.Pages
                 _appDbContext.ShouldEditComment.Add(new ShouldEditCommentModel { CommentId = CommentId, PostId = PostId, UserId = GetSessionUserId() });
             }
 
+            //_appDbContext.EditCommentRegret.Add(new EditCommentRegretModel { CommentId = CommentId });
+
+            _appDbContext.UndoEditComment.Add(new UndoEditCommentModel { RegretEditComment = true, CommentId = this.CommentId });
+
             _appDbContext.SaveChanges();
 
             return RedirectToPage();
@@ -149,7 +153,15 @@ namespace CrownGardenRazor.Pages
         public string GetSessionUserId()
         {
             //return _indentityContext.Users.FirstOrDefault(user => user.Email == User.Identity.Name)?.Id ?? "-1";
-            return _userManager.GetUserId(User);
+
+            string? output = _userManager.GetUserId(User);
+
+            if (output == null)
+            {
+                output = "-1";
+            }
+
+            return output;
         }
         public IActionResult OnPostLike()
         {
@@ -158,7 +170,7 @@ namespace CrownGardenRazor.Pages
                 return RedirectToPage();
             }
 
-            string loggedInUserId = GetSessionUserId(); 
+            string loggedInUserId = GetSessionUserId();
 
             PostLikeModel? postLikeModel = _appDbContext.PostLikes.FirstOrDefault(postLike => (postLike.UserId == loggedInUserId) && (postLike.PostId == PostId));
 
@@ -268,6 +280,9 @@ namespace CrownGardenRazor.Pages
             CommentModel comment = _appDbContext.Comments.Find(shouldEditCommentModel.CommentId);
             comment.Comment = CommentText;
 
+            //EditCommentRegretModel editCommentRegret = _appDbContext.EditCommentRegret.FirstOrDefault(ec => ec.CommentId == shouldEditCommentModel.CommentId);
+            //_appDbContext.EditCommentRegret.Remove(editCommentRegret);
+
             _appDbContext.ShouldEditComment.Remove(shouldEditCommentModel);
 
             _appDbContext.SaveChanges();
@@ -315,6 +330,58 @@ namespace CrownGardenRazor.Pages
         public string GetEmailForPost(string userId)
         {
             return _indentityContext.Users.FirstOrDefault(user => user.Id == userId).Email;
+        }
+
+        public bool ShowMoreOptionsDiv(int commentId)
+        {
+            bool output = true;
+
+            if (_appDbContext.EditCommentRegret.FirstOrDefault(editComment => editComment.CommentId == commentId) != null)
+            {
+                output = false;
+            }
+
+            return output;
+        }
+        public IActionResult OnPostRegretEditComment()
+        {
+            ShouldEditCommentModel shouldEditComment = _appDbContext.ShouldEditComment.FirstOrDefault(s => s.CommentId == CommentId);
+            _appDbContext.ShouldEditComment.Remove(shouldEditComment);
+
+            EditCommentRegretModel editCommentRegret = _appDbContext.EditCommentRegret.FirstOrDefault(ec => ec.CommentId == CommentId);
+            _appDbContext.EditCommentRegret.Remove(editCommentRegret);
+
+            _appDbContext.SaveChanges();
+
+            return RedirectToPage();
+        }
+
+        public (bool?, int) ShowRegretOption()
+        {
+            if (_appDbContext.UndoEditComment.FirstOrDefault() == null)
+            {
+                return (false, -1);
+
+            }
+            else
+            {
+                return (_appDbContext.UndoEditComment.FirstOrDefault().RegretEditComment, _appDbContext.UndoEditComment.FirstOrDefault().CommentId);
+            }
+        }
+
+        public IActionResult OnPostUndoEditComment()
+        {
+            UndoEditCommentModel undoEditComment = _appDbContext.UndoEditComment.First();
+
+            _appDbContext.UndoEditComment.Remove(undoEditComment);
+
+            ShouldEditCommentModel shouldEditComment = _appDbContext.ShouldEditComment.FirstOrDefault(s => (s.PostId == PostId) && (s.UserId == GetSessionUserId()));
+
+            _appDbContext.ShouldEditComment.Remove(shouldEditComment);
+
+            _appDbContext.SaveChanges();
+
+            return RedirectToPage();
         }
     }
 }

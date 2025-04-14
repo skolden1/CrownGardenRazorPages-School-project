@@ -6,122 +6,145 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="~/css/forum.css">
 
-<div class="card shadow-none border">
-    <form method="post" enctype="multipart/form-data">
-        <div class="card-body">
-            <div class="form-floating mb-3">
-                <textarea asp-for="PostText" class="form-control" placeholder="Leave a post" id="floatingTextarea2" style="height: 137px"></textarea>
-                <label for="floatingTextarea2" class="p-7">Post</label>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-                <label for="fileUpload" class="text-white d-flex align-items-center justify-content-center bg-primary p-2 fs-4 rounded-circle" style="cursor: pointer;">
-                    <i class="fa fa-photo"></i>
-                </label>
+<body class="bg-light">
+    <div class="d-flex justify-content-center py-5">
+        <div class="col-md-8 shadow-sm border bg-white p-4 rounded">
+            <form method="post" enctype="multipart/form-data">
+                <div class="card-body">
+                    <div class="form-floating mb-3">
+                        <textarea asp-for="PostText" class="form-control" placeholder="Skapa ett inlägg" id="floatingTextarea2" style="height: 137px"></textarea>
+                        <label for="floatingTextarea2" class="p-7">Post</label>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="fileUpload" class="text-white d-flex align-items-center justify-content-center bg-success p-2 fs-4 rounded-circle" style="cursor: pointer;">
+                            <i class="fa fa-photo"></i>
+                        </label>
 
-                <label for="fileUpload" class="text-dark px-3 py-2" style="text-decoration: none; cursor: pointer;">
-                    Photo / Video
-                </label>
+                        <label for="fileUpload" class="text-dark px-3 py-2" style="text-decoration: none; cursor: pointer;">
+                            Foto / Video
+                        </label>
 
-                <input type="file" asp-for="PostPictures" id="fileUpload" multiple accept="image/*,video/*" class="d-none" />
+                        <input type="file" asp-for="PostPictures" id="fileUpload" multiple accept="image/*,video/*" class="d-none" />
 
-                <p id="file-name">Ingen bild vald</p>
+                        <p id="file-name" class="mb-0">Ingen bild vald</p>
 
-                <button type="submit" class="btn btn-primary ms-auto">Post</button>
-            </div>
-        </div>
-    </form>
-</div>
-
-@section Scripts {
-    <script>
-        document.getElementById('fileUpload').addEventListener('change', function (e) {
-            const fileInput = e.target;
-            const display = document.getElementById('file-name');
-
-            if (fileInput.files.length > 0) {
-                display.textContent = fileInput.files[0].name;
-            } else {
-                display.textContent = "Ingen bild vald";
-            }
-        });
-    </script>
-}
-<div class="rows">
-    <div class="col-md-8">
-        @foreach (Model.PostModel item in Model.Posts)
-        {
-            <div class="post-content">
-                @if (item.PostPic != null)
-                {
-                    <img src="@item.PostPic" alt="post-image" class="img-responsive post-image">
-                }
-                <div class="post-container">
-                    <img src="@Model.GetProfilePicture(item.UserId)" alt="user" class="profile-photo-md pull-left">
-                    <div class="post-detail">
-                        <div class="user-info">
-                            <h5><a href="timeline.html" class="profile-link" style="text-decoration: none;">@Model.GetEmailForPost(item.UserId)</a> <span class="following">following</span></h5>
-                            <p class="text-muted">Published a photo on @item.PostDate.ToString()</p>
-                        </div>
-                        <form method="post" asp-page-handler="Delete">
-                            @if (Model.PostUserIdIsLoggedInUser(item.UserId))
-                            {
-                                <input asp-for="PostId" type="hidden" value="@item.Id" />
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            }
-                        </form>
-                        <form method="post" asp-page-handler="Like">
-                            <div class="reaction">
-                                <input asp-for="PostId" type="hidden" value="@item.Id" />
-                                @if (Model.HasLikedPost(item.Id))
-                                {
-                                    <button type="submit" class="btn text-green"><i class="fa fa-thumbs-up"></i>@item.LikeQuantity</button>
-                                }
-                                else
-                                {
-                                    <button type="submit" class="btn text-red"><i class="fa fa-thumbs-up"></i>@item.LikeQuantity</button>
-                                }
-                            </div>
-                        </form>
-                        <div class="line-divider"></div>
-                        <div class="post-text">
-                            <p><i class="em em-anguished">@item.PostTxt</i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
-                        </div>
-                        <div class="line-divider"></div>
-                        @foreach ((string, string, int) tuple in Model.GetCommentsForPost(item))
-                        {
-                            <div class="post-comment">
-                                <img src="@Model.GetProfilePicture(tuple.Item2)" alt="" class="profile-photo-sm">
-                                <p><a href="timeline.html" class="profile-link" style="text-decoration: none;">@Model.GetEmailForPost(tuple.Item2)</a><i class="em em-laughing"></i> @tuple.Item1</p>
-
-                                @if (Model.GetSessionUserId() == tuple.Item2)
-                                {
-                                    <div class="m-container"><div class="more-options-div"></div></div>
-
-                                    <form method="post" asp-page-handler="EditComment" class="comments-options-form">
-                                        <button type="submit" class="btn btn-outline-primary editbutton">Redigera</button>
-                                        <input type="hidden" asp-for="CommentId" value="@tuple.Item3" />
-                                        <input type="hidden" asp-for="PostId" value="@item.Id" />
-                                    </form>
-                                    <form method="post" asp-page-handler="DeleteComment" class="comments-options-form">
-                                        <button type="submit" class="btn btn-danger">Radera</button>
-                                        <input type="hidden" asp-for="CommentId" value="@tuple.Item3" />
-                                    </form>
-                                }
-
-                            </div>
-                        }
-                        <form method="post" asp-page-handler="Comment">
-                            <div class="post-comment">
-                                <img src="@Model.GetProfilePicture(Model.GetSessionUserId())" alt="" class="profile-photo-sm">
-                                <input asp-for="CommentText" type="text" class="form-control comment-text" placeholder="@Model.GetPlaceHolderForPost(item.Id)">
-                                <input asp-for="PostId" type="hidden" value="@item.Id" />
-                                <button type="submit" class="btn btn-primary ms-auto">Post</button>
-                            </div>
-                        </form>
+                        <button type="submit" class="btn btn-success ms-auto">Post</button>
                     </div>
                 </div>
-            </div>
-        }
-
+            </form>
+        </div>
     </div>
-</div>
+
+    <div class="d-flex justify-content-center mb-5">
+        <div class="col-md-8">
+            @foreach (Model.PostModel item in Model.Posts)
+            {
+                <div class="post-content card border rounded shadow-sm mb-4">
+                    @if (item.PostPic != null)
+                    {
+                        <img src="@item.PostPic" alt="post-image" class="img-responsive post-image w-100" />
+                    }
+                    <div class="post-container p-3">
+                        <img src="@Model.GetProfilePicture(item.UserId)" alt="user" class="profile-photo-md pull-left me-3">
+                        <div class="post-detail">
+                            <div class="user-info">
+                                <h5><a href="timeline.html" class="profile-link text-decoration-none">@Model.GetEmailForPost(item.UserId)</a> <span class="following">following</span></h5>
+                                <p class="text-muted">Publicerade ett foto - @item.PostDate.ToString()</p>
+                            </div>
+                            @if (Model.PostUserIdIsLoggedInUser(item.UserId))
+                            {
+                                <form method="post" asp-page-handler="Delete" class="mb-2">
+                                    <input asp-for="PostId" type="hidden" value="@item.Id" />
+                                    <button type="submit" class="btn btn-danger">Radera</button>
+                                </form>
+                            }
+
+                            <form method="post" asp-page-handler="Like">
+                                <div class="reaction mt-2">
+                                    <input asp-for="PostId" type="hidden" value="@item.Id" />
+                                    @if (Model.HasLikedPost(item.Id))
+                                    {
+                                        <button type="submit" class="btn text-green"><i class="fa fa-thumbs-up"></i> @item.LikeQuantity</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn text-red"><i class="fa fa-thumbs-up"></i> @item.LikeQuantity</button>
+                                    }
+                                </div>
+                            </form>
+
+                            <div class="line-divider my-3 border-top"></div>
+
+                            <div class="post-text">
+                                <p><i class="em em-anguished"></i> @item.PostTxt <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
+                            </div>
+
+                            <div class="line-divider my-3 border-top"></div>
+
+                            @foreach ((string, string, int) tuple in Model.GetCommentsForPost(item))
+                            {
+                                <div class="post-comment d-flex mb-3">
+                                    <img src="@Model.GetProfilePicture(tuple.Item2)" alt="" class="profile-photo-sm me-2">
+                                    <p class="mb-1">
+                                        <a href="timeline.html" class="profile-link text-decoration-none">@Model.GetEmailForPost(tuple.Item2)</a> <i class="em em-laughing"></i> @tuple.Item1
+                                    </p>
+
+                                    @if (Model.GetSessionUserId() == tuple.Item2)
+                                    {
+
+                                        <div class="test">
+
+                                            <div class="m-container"><div class="more-options-div"></div></div>
+
+                                            @if (Model.ShowRegretOption().Item1 == true && Model.ShowRegretOption().Item2 == tuple.Item3)
+                                            {
+                                                <form method="post" asp-page-handler="UndoEditComment">
+                                                    <input type="hidden" asp-for="PostId" value="@item.Id" />
+                                                    <button class="btn btn-outline-danger btn-sm">Ångra</button>
+                                                </form>
+                                            }
+
+                                            <form method="post" asp-page-handler="EditComment" class="comments-options-form">
+                                                <button type="submit" class="btn btn-outline-success btn-sm">Redigera</button>
+                                                <input type="hidden" asp-for="CommentId" value="@tuple.Item3" />
+                                                <input type="hidden" asp-for="PostId" value="@item.Id" />
+                                            </form>
+                                            <form method="post" asp-page-handler="DeleteComment" class="comments-options-form">
+                                                <button type="submit" class="btn btn-danger btn-sm">Radera</button>
+                                                <input type="hidden" asp-for="CommentId" value="@tuple.Item3" />
+                                            </form>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                            <form method="post" asp-page-handler="Comment">
+                                <div class="post-comment d-flex align-items-center gap-2 mt-3">
+                                    <img src="@Model.GetProfilePicture(Model.GetSessionUserId())" alt="" class="profile-photo-sm">
+                                    <input asp-for="CommentText" type="text" class="form-control" placeholder="@Model.GetPlaceHolderForPost(item.Id)">
+                                    <input asp-for="PostId" type="hidden" value="@item.Id" />
+                                    <button type="submit" class="btn btn-success">Post</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            document.getElementById('fileUpload').addEventListener('change', function (e) {
+                const fileInput = e.target;
+                const display = document.getElementById('file-name');
+
+                if (fileInput.files.length > 0) {
+                    display.textContent = fileInput.files[0].name;
+                } else {
+                    display.textContent = "Ingen bild vald";
+                }
+            });
+        </script>
+    }
+</body>

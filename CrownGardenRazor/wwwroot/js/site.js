@@ -1,40 +1,40 @@
-﻿let moreOptionsClicked = [];
+﻿let isMoreOptionDivClicked = false;
 
-const moreOptionsDiv = document.querySelectorAll(".m-container");
-const commentsOptionsForms = document.querySelectorAll(".comments-options-form");
+const moreOptionsDivs = document.querySelectorAll(".m-container");
+const commentOptionsForm = document.querySelectorAll(".comments-options-form");
 
-const onMoreOptionsClick = (moreOp) => {
-    for (let i = 0; i < moreOptionsDiv.length; i++) {
-        if (moreOp === moreOptionsDiv[i]) {
-            if (moreOptionsClicked[i] === false) {
-                changeDisplay(i, true);
-                moreOptionsClicked[i] = true;
-            }
-            else {
-                changeDisplay(i, false);
-                moreOptionsClicked[i] = false;
-            }
-        }
-    }
-}
+let latestIndex = -1;
 
-const changeDisplay = (moreOptionsDivIndex, showDisplay) => {
-    let firstIndex = moreOptionsDivIndex * 2;
-    let secondIndex = firstIndex + 1;
+const moreOptionsDivClicked = (i) => {
+    if (latestIndex != -1) {
 
-    if (showDisplay === true) {
-        commentsOptionsForms[firstIndex].style.display = "block";
-        commentsOptionsForms[secondIndex].style.display = "block";
+        let firstIndex = latestIndex * 2;
+        let secondIndex = firstIndex + 1;
+
+        commentOptionsForm[firstIndex].style.display = "none";
+        commentOptionsForm[secondIndex].style.display = "none";
+
+        firstIndex = i * 2;
+        secondIndex = firstIndex + 1;
+
+        commentOptionsForm[firstIndex].style.display = "block";
+        commentOptionsForm[secondIndex].style.display = "block";
+
+        latestIndex = i;
     }
     else {
-        commentsOptionsForms[firstIndex].style.display = "none";
-        commentsOptionsForms[secondIndex].style.display = "none";
-    }
 
+        let firstIndex = i * 2;
+        let secondIndex = firstIndex + 1;
+
+        commentOptionsForm[firstIndex].style.display = "block";
+        commentOptionsForm[secondIndex].style.display = "block";
+
+        latestIndex = i;
+    }
+    
 }
 
-moreOptionsDiv.forEach(moreOp => {
-    moreOp.addEventListener("click", () => onMoreOptionsClick(moreOp));
-    moreOptionsClicked.push(false);
-})
-
+for (let i = 0; i < moreOptionsDivs.length; i++) {
+    moreOptionsDivs[i].addEventListener('click', () => moreOptionsDivClicked(i));
+}
